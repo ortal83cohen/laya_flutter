@@ -16,10 +16,7 @@ void main() {
       find.textContaining('Snake checkpoint is not configured.'),
       findsOneWidget,
     );
-    expect(
-      find.textContaining('--dart-define=LAYA_SNAKE_CHECKPOINT_DIR='),
-      findsOneWidget,
-    );
+    expect(find.textContaining('app_settings.dart'), findsOneWidget);
     expect(find.text('Opening…'), findsNothing);
   });
 

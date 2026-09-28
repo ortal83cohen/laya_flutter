@@ -1,8 +1,24 @@
 name: laya_flutter
-description: Laya Flutter library.
-version: 0.1.6
+description: >-
+  Offline multilingual Laya inference for Flutter. Open an ONNX agent from cache
+  or a local bundle, then run typed predict for choice, score, and noul questions.
+version: 0.1.0
 repository: https://github.com/ortal83cohen/laya_flutter
 homepage: https://github.com/ortal83cohen/laya_flutter
+issue_tracker: https://github.com/ortal83cohen/laya_flutter/issues
+documentation: https://github.com/ortal83cohen/laya_flutter#readme
+
+topics:
+  - onnx
+  - offline
+  - inference
+  - flutter
+  - ai
+
+screenshots:
+  - description: >-
+      Classic Snake on iOS driven by offline Laya predict at each decision step.
+    path: screenshots/example.gif
 
 environment:
   sdk: ^3.13.0
@@ -21,4 +37,3 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-

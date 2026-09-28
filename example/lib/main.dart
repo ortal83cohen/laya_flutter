@@ -12,8 +12,7 @@ import 'package:laya_flutter/laya_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'snake_screen.dart';
-
-const String _snakeCheckpointDir = String.fromEnvironment('LAYA_CACHE_DIR');
+import 'app_settings.dart';
 
 void main() {
   runApp(const ExampleApp(autostart: true));
@@ -61,13 +60,13 @@ class ExampleApp extends StatelessWidget {
   const ExampleApp({
     super.key,
     this.autostart = false,
-    this.snakeCheckpointDir = _snakeCheckpointDir,
+    this.snakeCheckpointDir = AppSettings.snakeCheckpointDir,
   });
 
   /// When true, the home begins opening the runtime without a play control.
   final bool autostart;
 
-  /// Optional cache directory for the basic multilingual model.
+  /// Optional directory containing the prepared Snake ONNX bundle.
   final String snakeCheckpointDir;
 
   @override
@@ -91,13 +90,13 @@ class ExampleHomePage extends StatefulWidget {
   const ExampleHomePage({
     super.key,
     this.autostart = false,
-    this.snakeCheckpointDir = _snakeCheckpointDir,
+    this.snakeCheckpointDir = AppSettings.snakeCheckpointDir,
   });
 
   /// When true, begin open without a play button.
   final bool autostart;
 
-  /// Optional cache directory for the basic multilingual model.
+  /// Optional directory containing the prepared Snake ONNX bundle.
   final String snakeCheckpointDir;
 
   @override
@@ -132,10 +131,14 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
       _error = null;
     });
     try {
-      final LoadedRuntime runtime = await LayaFlutter.open(
-        widget.snakeCheckpointDir.trim().isEmpty
-            ? await resolveExampleCache()
-            : Directory(widget.snakeCheckpointDir),
+      final String bundlePath = widget.snakeCheckpointDir.trim();
+      if (bundlePath.isEmpty) {
+        throw StateError(
+          'Snake checkpoint is not configured. Set it in app_settings.dart.',
+        );
+      }
+      final LoadedRuntime runtime = await LayaFlutter.openLocalBundle(
+        Directory(bundlePath),
       );
       if (!mounted) {
         await runtime.close();

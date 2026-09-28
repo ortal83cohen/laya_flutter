@@ -26,6 +26,10 @@ Thumbs.db
 # Add the product's build and dependency directories here once
 # bootstrap-product has chosen a stack.
 
+# Local screen recordings (README GIF source)
+*.mov
+*.mp4
+
 # Flutter and Dart generated files
 /build/
 /.dart_tool/

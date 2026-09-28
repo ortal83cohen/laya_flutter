@@ -250,15 +250,18 @@ void main() {
     expect(openedPaths, hasLength(3));
   });
 
-  test('real example requires a compile-time local Snake bundle', () {
+  test('real example uses the centralized local Snake bundle setting', () {
     final String source = File('example/lib/main.dart').readAsStringSync();
-    expect(
-      source,
-      contains("String.fromEnvironment(\n  'LAYA_SNAKE_CHECKPOINT_DIR'"),
-    );
+    final String settings = File('example/lib/app_settings.dart')
+        .readAsStringSync();
+    expect(settings, contains('static const String snakeCheckpointDir'));
+    expect(source, contains('AppSettings.snakeCheckpointDir'));
     expect(source, contains('LayaFlutter.openLocalBundle('));
     expect(source, isNot(contains('LayaFlutter.open(')));
-    expect(source, contains('Snake checkpoint is not configured.'));
+    expect(
+      source,
+      contains('Snake checkpoint is not configured in app_settings.dart.'),
+    );
   });
 }
 
