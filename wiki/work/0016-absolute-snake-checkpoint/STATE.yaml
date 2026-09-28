@@ -1,0 +1,37 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0016-absolute-snake-checkpoint"
+title: "Use a four-direction Snake checkpoint in the example"
+route: full
+phase: verify
+round: 1
+verdict: CONDITIONAL
+owner_agent: main-agent
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers:
+  - "Tuned Snake weights and a matching exported ONNX bundle are not available locally; real model load, parity, and gameplay remain unverified. No weight download was authorized."
+followups:
+  - "After an authorized local bundle is prepared, run the example with LAYA_SNAKE_CHECKPOINT_DIR, compare frozen Python/Flutter predictions, and run independent seeded games."
+decisions:
+  - round: 1
+    verdict: CONDITIONAL
+    action: revise-research
+    reason: "Research-review-01 F-001 could not retrieve pinned revisions through its browser. Main agent verified the exact Hub revision and sibling list using the read-only Hub API, the pinned agent config using its resolve URL, and the pinned source encoder blob using GitHub API; added the exact evidence to research. No weights were fetched."
+  - round: 1
+    verdict: FAIL
+    action: revise-plan
+    reason: "Plan-review-01 F-001: added an explicit incompatible-bundle error scenario to U2. F-002: expanded U1 completion and scenarios to cover every diagnostic field and finished outcome."
+  - round: 2
+    verdict: PASS
+    action: annotate-only
+    reason: "Independent plan-review-02 confirmed both plan findings closed and reported PASS."
+  - round: 1
+    verdict: CONDITIONAL
+    action: accept-external-boundary
+    reason: "Implementation-review-01 found no local implementation defect. AC-002 exact public-model inference and AC-005 pinned-checkpoint games cannot be verified without the unavailable tuned weights. Main agent checked pinned encoder/teacher/game source read-only against the local prompt and literal-move rule; no download or model run was claimed. The user-visible missing-configuration message and README were improved, but an actual configured-device launch remains unverified."
+escalations: []
+goal_check: SC-003
+compound: skipped
+compound_reason: "The work item has not passed its real tuned-checkpoint verification gate, so no reusable solution is recorded."

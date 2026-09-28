@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:collection';
 import 'dart:math' as math;
 
 import 'package:laya_flutter/laya_flutter.dart';
@@ -49,34 +50,34 @@ typedef SnakePredict = Future<Map<String, LayaAnswer>> Function(
 /// Optional notification after a finished living-step predict outcome.
 typedef SnakeChoiceRecordCallback = void Function(SnakeChoiceRecord record);
 
-/// Why a living step finished without an accepted relative turn.
+/// Why a living step finished without an accepted absolute direction.
 enum SnakeChoiceNoChoiceReason {
   /// Predict threw before a turn answer was available.
   predictFailure,
 
-  /// Turn choice missing, or not left / right / straight.
-  missingOrNonRelativeKey,
+  /// Move choice missing, or not up / down / left / right.
+  missingOrNonAbsoluteKey,
 
-  /// The returned relative turn would enter a wall.
+  /// The returned direction would enter a wall.
   wallCollision,
 
-  /// The returned relative turn would enter the snake body.
+  /// The returned direction would enter the snake body.
   bodyCollision,
 }
 
 /// Classification of the model-owned result after one living attempt.
 enum SnakeChoiceValidation {
-  /// The returned relative key was legal and advanced the snake.
+  /// The returned absolute key was legal and advanced the snake.
   accepted,
 
-  /// The returned relative key entered a wall and ended the run.
+  /// The returned absolute key entered a wall and ended the run.
   wallCollision,
 
-  /// The returned relative key entered the snake body and ended the run.
+  /// The returned absolute key entered the snake body and ended the run.
   bodyCollision,
 
-  /// The answer did not contain one of the relative keys.
-  missingOrNonRelativeKey,
+  /// The answer did not contain one of the absolute keys.
+  missingOrNonAbsoluteKey,
 
   /// Predict threw before producing an answer.
   predictFailure,
@@ -143,10 +144,10 @@ final class SnakeChoiceRecord {
   /// Valid model keys before this attempt, newest last.
   final List<String> recentChoices;
 
-  /// The exact relative key returned by the model, or null when absent.
+  /// The exact absolute key returned by the model, or null when absent.
   final String? choice;
 
-  /// Cell selected by the returned relative key, including an unsafe cell.
+  /// Cell selected by the returned absolute key, including an unsafe cell.
   final GridCell? attemptedCell;
 
   /// Diagnostic classification; it never replaces the model key.
@@ -226,13 +227,13 @@ final class SnakeController {
   /// Snake cells head-first.
   final List<GridCell> _snake;
 
-  /// Recent valid model keys, newest last, retained as model context.
+  /// Recent valid model keys, newest last, retained for diagnostics.
   final List<String> _recentChoices = <String>[];
 
-  /// Fixed objective shared by the prompt and diagnostic records.
+  /// Objective retained in diagnostic records; the checkpoint owns the prompt.
   static const String _goal = 'Reach food while avoiding walls and body.';
 
-  /// Progress measurement shared by the prompt and diagnostic records.
+  /// Progress measurement retained in diagnostic records.
   static const String _progressMetric = 'Manhattan distance to food';
 
   /// Current cardinal heading.
@@ -294,87 +295,28 @@ final class SnakeController {
     return false;
   }
 
-  /// English situation for one step, including candidate facts and loop context.
+  /// Snake state in the public tuned checkpoint's training format.
   String buildStateString() {
-    final GridCell h = head;
-    final String foodSentence = food == null
-        ? 'There is no food cell.'
-        : 'The food cell is column ${food!.col}, row ${food!.row}.';
-    final int? progressBefore = _distanceToFood(h);
-    final String progressSentence = progressBefore == null
-        ? 'There is no food-distance metric.'
-        : 'The Manhattan distance to food is $progressBefore.';
-    final String relativeFood = food == null
-        ? 'none'
-        : _relativeFoodPosition(h, food!);
-    final String recent = _recentChoices.isEmpty
-        ? 'none'
-        : _recentChoices.join(', ');
-    final String leftKind = _classify(
-      _cellInHeading(head, _rotate(heading, 'left')),
-    );
-    final String rightKind = _classify(
-      _cellInHeading(head, _rotate(heading, 'right')),
-    );
-    final String aheadKind = _classify(
-      _cellInHeading(head, _rotate(heading, 'straight')),
-    );
-    final String snakeCells = _snake
-        .map((GridCell cell) => '(${cell.col},${cell.row})')
-        .join(' ');
-    final String candidates = <String>[
-      'left',
-      'right',
-      'straight',
-    ].map(_candidateDescription).join(' ');
-    return 'Board width $width columns, height $height rows. '
-        'Column 0 is west; higher columns are east. '
-        'Row 0 is north; higher rows are south. '
-        'The head faces ${heading.name}. '
-        'The head cell is column ${h.col}, row ${h.row}. '
-        '$foodSentence '
-        'The cell to the left is $leftKind. '
-        'The cell to the right is $rightKind. '
-        'The cell ahead is $aheadKind. '
-        'Food is $relativeFood relative to the current facing. '
-        '$progressSentence '
-        'Recent model choices: $recent. '
-        '$_goal '
-        'The candidate facts are: $candidates '
-        'Snake cells from head to tail: $snakeCells.';
+    final List<String> fields = <String>[
+      'heading: ${_keyForHeading(heading)}',
+      'length: ${_snake.length}',
+      'food: ${_foodText()}',
+      for (final String move in _absoluteMoves) '$move: ${_moveText(move)}',
+    ];
+    return fields.join(' | ');
   }
 
-  /// One choice question: id turn, keys left/right/straight as relative turns.
-  ///
-  /// Instructions make the typed relative output and model ownership explicit.
+  /// Exact question and four absolute options of the public Snake checkpoint.
   LayaQuestion buildTurnQuestion() {
     return LayaQuestion(
-      id: 'turn',
+      id: 'move',
       type: LayaQuestionType.choice,
-      instructions:
-          'This is the game Snake. Return exactly one key: left, right, or straight. '
-          'Do not return a sentence or an absolute direction. '
-          'The goal is to reach the food while avoiding walls and the snake body. '
-          'Moving onto a wall or onto the snake body ends the game. '
-          'Use the candidate facts and the Manhattan distance to food. '
-          'Recent model choices are included so a repeated pattern is visible. '
-          'The application executes exactly the returned key and does not correct or replace it. '
-          'The board is a grid. Column 0 is the west edge, and a higher column is farther east. '
-          'Row 0 is the north edge, and a higher row is farther south. '
-          'A cell past an edge is a wall. '
-          'The snake is a chain of cells, and the first cell is the head. '
-          'The head faces north, east, south, or west. '
-          'Left, right, and straight are turns relative to that facing. '
-          'Left rotates the facing 90 degrees to its left. '
-          'Right rotates the facing 90 degrees to its right. '
-          'Straight keeps the facing. '
-          'The head then moves one cell in the new facing. '
-          'A candidate describes its next cell, cell kind, and distance to food. '
-          'A cell kind is empty, wall, body, or food.',
-      criteria: <String, String>{
-        'left': _candidateDescription('left'),
-        'right': _candidateDescription('right'),
-        'straight': _candidateDescription('straight'),
+      instructions: 'Which direction should the snake move next to reach the food safely?',
+      criteria: const <String, String>{
+        'up': 'move up',
+        'down': 'move down',
+        'left': 'move left',
+        'right': 'move right',
       },
     );
   }
@@ -432,9 +374,9 @@ final class SnakeController {
       );
       return;
     }
-    final LayaAnswer? turn = answers['turn'];
+    final LayaAnswer? turn = answers['move'];
     final String? choice = turn?.choice;
-    if (choice == null || !_isRelativeTurnKey(choice)) {
+    if (choice == null || !_absoluteMoves.contains(choice)) {
       _notifyChoiceRecord(
         SnakeChoiceRecord(
           instructions: question.instructions,
@@ -451,16 +393,16 @@ final class SnakeController {
           recentChoices: recentBefore,
           choice: choice,
           attemptedCell: null,
-          validation: SnakeChoiceValidation.missingOrNonRelativeKey,
+          validation: SnakeChoiceValidation.missingOrNonAbsoluteKey,
           repeatedTurn: false,
-          reason: SnakeChoiceNoChoiceReason.missingOrNonRelativeKey,
+          reason: SnakeChoiceNoChoiceReason.missingOrNonAbsoluteKey,
           probabilities: turn?.probabilities,
           confidence: turn?.confidence,
         ),
       );
       return;
     }
-    final CardinalHeading nextHeading = _rotate(headingBefore, choice);
+    final CardinalHeading nextHeading = _headingForKey(choice);
     final GridCell attemptedCell = _cellInHeading(headBefore, nextHeading);
     final bool wall = _isWall(attemptedCell);
     final bool body = !wall && _isBody(attemptedCell);
@@ -540,15 +482,87 @@ final class SnakeController {
     }
   }
 
-  bool _isRelativeTurnKey(String choice) =>
-      choice == 'left' || choice == 'right' || choice == 'straight';
+  static const List<String> _absoluteMoves = <String>[
+    'up',
+    'down',
+    'left',
+    'right',
+  ];
 
-  String _candidateDescription(String choice) {
-    final GridCell candidate = _cellInHeading(head, _rotate(heading, choice));
-    final String distance = _distanceToFood(candidate)?.toString() ?? 'none';
-    return '$choice: next cell (${candidate.col},${candidate.row}); '
-        'cell kind ${_classify(candidate)}; distance to food $distance.';
+  String _foodText() {
+    final GridCell? target = food;
+    if (target == null) return 'none';
+    final int dx = target.col - head.col;
+    final int dy = target.row - head.row;
+    final List<String> parts = <String>[];
+    if (dy != 0) parts.add('${dy.abs()} ${dy < 0 ? 'up' : 'down'}');
+    if (dx != 0) parts.add('${dx.abs()} ${dx < 0 ? 'left' : 'right'}');
+    return parts.join(', ');
   }
+
+  String _moveText(String move) {
+    final CardinalHeading direction = _headingForKey(move);
+    if (_snake.length > 1 && _isReverse(direction)) return 'body';
+    final GridCell cell = _cellInHeading(head, direction);
+    if (_isWall(cell)) return 'wall';
+    if (_isBody(cell)) return 'body';
+    final bool eating = cell == food;
+    final List<GridCell> nextSnake = <GridCell>[
+      cell,
+      ...eating ? _snake : _snake.take(_snake.length - 1),
+    ];
+    final Set<GridCell> blocked = nextSnake
+        .skip(1)
+        .take(nextSnake.length - 2)
+        .toSet();
+    final Set<GridCell> reachable = _reachableCells(cell, blocked);
+    final int room = reachable.length;
+    final bool tail =
+        nextSnake.length < 3 || reachable.contains(nextSnake.last);
+    return '${eating ? 'food' : 'free'}, room $room '
+        '${room >= nextSnake.length ? 'open' : 'trap'}, '
+        'tail ${tail ? 'yes' : 'no'}';
+  }
+
+  Set<GridCell> _reachableCells(GridCell start, Set<GridCell> blocked) {
+    if (_isWall(start) || blocked.contains(start)) return <GridCell>{};
+    final Set<GridCell> seen = <GridCell>{start};
+    final Queue<GridCell> queue = Queue<GridCell>()..add(start);
+    while (queue.isNotEmpty && seen.length < 10000) {
+      final GridCell current = queue.removeFirst();
+      for (final String move in _absoluteMoves) {
+        final GridCell neighbor = _cellInHeading(current, _headingForKey(move));
+        if (!_isWall(neighbor) &&
+            !blocked.contains(neighbor) &&
+            seen.add(neighbor)) {
+          queue.add(neighbor);
+        }
+      }
+    }
+    return seen;
+  }
+
+  bool _isReverse(CardinalHeading direction) =>
+      (heading.index - direction.index).abs() == 2;
+
+  String _keyForHeading(CardinalHeading value) => switch (value) {
+    CardinalHeading.north => 'up',
+    CardinalHeading.east => 'right',
+    CardinalHeading.south => 'down',
+    CardinalHeading.west => 'left',
+  };
+
+  CardinalHeading _headingForKey(String value) => switch (value) {
+    'up' => CardinalHeading.north,
+    'down' => CardinalHeading.south,
+    'left' => CardinalHeading.west,
+    'right' => CardinalHeading.east,
+    _ => throw ArgumentError.value(
+      value,
+      'value',
+      'Unknown absolute direction',
+    ),
+  };
 
   int? _distanceToFood(GridCell cell) {
     final GridCell? target = food;
@@ -556,39 +570,6 @@ final class SnakeController {
       return null;
     }
     return (target.col - cell.col).abs() + (target.row - cell.row).abs();
-  }
-
-  String _relativeFoodPosition(GridCell from, GridCell target) {
-    final int columnDelta = target.col - from.col;
-    final int rowDelta = target.row - from.row;
-    int forward;
-    int right;
-    switch (heading) {
-      case CardinalHeading.north:
-        forward = -rowDelta;
-        right = columnDelta;
-      case CardinalHeading.east:
-        forward = columnDelta;
-        right = rowDelta;
-      case CardinalHeading.south:
-        forward = rowDelta;
-        right = -columnDelta;
-      case CardinalHeading.west:
-        forward = -columnDelta;
-        right = -rowDelta;
-    }
-    final List<String> sides = <String>[];
-    if (forward > 0) {
-      sides.add('ahead');
-    } else if (forward < 0) {
-      sides.add('behind');
-    }
-    if (right > 0) {
-      sides.add('right');
-    } else if (right < 0) {
-      sides.add('left');
-    }
-    return sides.isEmpty ? 'same cell' : sides.join(' and ');
   }
 
   bool _hasRepeatedPattern(List<String> choices) {
@@ -608,37 +589,6 @@ final class SnakeController {
         choices[last] != choices[last - 1];
   }
 
-  CardinalHeading _rotate(CardinalHeading current, String choice) {
-    switch (choice) {
-      case 'straight':
-        return current;
-      case 'left':
-        switch (current) {
-          case CardinalHeading.north:
-            return CardinalHeading.west;
-          case CardinalHeading.east:
-            return CardinalHeading.north;
-          case CardinalHeading.south:
-            return CardinalHeading.east;
-          case CardinalHeading.west:
-            return CardinalHeading.south;
-        }
-      case 'right':
-        switch (current) {
-          case CardinalHeading.north:
-            return CardinalHeading.east;
-          case CardinalHeading.east:
-            return CardinalHeading.south;
-          case CardinalHeading.south:
-            return CardinalHeading.west;
-          case CardinalHeading.west:
-            return CardinalHeading.north;
-        }
-      default:
-        return current;
-    }
-  }
-
   GridCell _cellInHeading(GridCell from, CardinalHeading dir) {
     switch (dir) {
       case CardinalHeading.north:
@@ -655,18 +605,6 @@ final class SnakeController {
   bool _isWall(GridCell cell) =>
       cell.col < 0 || cell.col >= width || cell.row < 0 || cell.row >= height;
 
-  bool _isBody(GridCell cell) => _snake.contains(cell);
-
-  String _classify(GridCell cell) {
-    if (_isWall(cell)) {
-      return 'wall';
-    }
-    if (_isBody(cell)) {
-      return 'body';
-    }
-    if (food != null && cell == food) {
-      return 'food';
-    }
-    return 'empty';
-  }
+  bool _isBody(GridCell cell) =>
+      (cell == food ? _snake : _snake.take(_snake.length - 1)).contains(cell);
 }

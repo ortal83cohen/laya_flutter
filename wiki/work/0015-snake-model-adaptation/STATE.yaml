@@ -3,24 +3,21 @@
 id: "0015-snake-model-adaptation"
 title: "Evaluate and prepare Snake-specific model adaptation"
 route: full
-phase: verify
+phase: done
 round: 0
-verdict: null
-owner_agent: main-agent
+verdict: PASS
+owner_agent: null
 created: "2026-09-28"
 updated: "2026-09-28"
 
 blockers: []
-followups:
-  - summary: "Run base and Snake-finetuned checkpoint trajectories on the held-out fixture in a GPU-capable external environment."
-    severity: IMPORTANT
-    owner: "unassigned"
+followups: []
 
 decisions:
   - round: 0
-    verdict: null
-    action: annotate-only
-    reason: "The configured checkpoint is multilingual base; the repository adds only reproducible evaluation plumbing and does not claim training."
+    verdict: PASS
+    action: accept
+    reason: "The configured checkpoint is multilingual base; the repository adds reproducible evaluation plumbing, fixture validation and comparison schema only. No fine-tuning run or Snake-specific checkpoint is claimed."
 
 escalations: []
 

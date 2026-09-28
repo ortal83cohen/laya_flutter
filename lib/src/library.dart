@@ -6,6 +6,7 @@ import 'package:flutter_onnxruntime/flutter_onnxruntime.dart';
 
 import 'checkpoint_store.dart';
 import 'loaded_runtime.dart';
+import 'onnx_graph.dart';
 import 'tokenize.dart';
 
 export 'answers.dart' show LayaAnswer, LayaQuestion, LayaQuestionType;
@@ -55,6 +56,91 @@ final class LayaFlutter {
       temperatureByOptions: config.temperatureByOptions,
       maxLen: config.maxLen,
       headMaxLen: config.headMaxLen,
+    );
+  }
+
+  /// Opens an existing local ONNX bundle without fetching or substituting files.
+  ///
+  /// [directory] must contain `laya.onnx`, `tokenizer.json`, and
+  /// `rl_agent_config.json` from the same exported checkpoint. The graph must
+  /// expose the Laya agent input and output names. This method does not require
+  /// the multilingual cache's fixed graph size or `tokenizer_config.json`.
+  static Future<LoadedRuntime> openLocalBundle(
+    Directory directory, {
+    @visibleForTesting Future<OrtSession> Function(String path)? createSession,
+  }) async {
+    if (!await directory.exists()) {
+      throw StateError(
+        'Local ONNX bundle directory missing: ${directory.path}',
+      );
+    }
+
+    final String separator = Platform.pathSeparator;
+    final File onnx = File('${directory.path}${separator}laya.onnx');
+    final File tokenizer = File('${directory.path}${separator}tokenizer.json');
+    final File config = File(
+      '${directory.path}${separator}rl_agent_config.json',
+    );
+    for (final File file in <File>[onnx, tokenizer, config]) {
+      if (!await file.exists() || await file.length() == 0) {
+        throw StateError(
+          'Local ONNX bundle file missing or empty: ${file.path}',
+        );
+      }
+    }
+
+    final TextEncoder encoder;
+    try {
+      encoder = HfTextEncoder.fromFile(tokenizer.path);
+    } catch (error) {
+      throw StateError(
+        'Invalid local tokenizer.json at ${tokenizer.path}: $error',
+      );
+    }
+    final ({
+      List<double> temperature,
+      Map<String, double> temperatureByOptions,
+      int maxLen,
+      int headMaxLen,
+    })
+    settings;
+    try {
+      settings = readAgentConfig(config);
+    } catch (error) {
+      throw StateError(
+        'Invalid local rl_agent_config.json at ${config.path}: $error',
+      );
+    }
+
+    final Future<OrtSession> Function(String path) sessionFactory =
+        createSession ?? (String path) => OnnxRuntime().createSession(path);
+    final OrtSession session;
+    try {
+      session = await sessionFactory(onnx.path);
+    } catch (error) {
+      throw StateError(
+        'Could not open local ONNX graph at ${onnx.path}: $error',
+      );
+    }
+    if (!matchesOnnxAgentContract(session.inputNames, session.outputNames)) {
+      try {
+        await session.close();
+      } catch (_) {
+        // Preserve the actionable graph-contract error if cleanup also fails.
+      }
+      throw StateError(
+        'Incompatible local ONNX graph at ${onnx.path}: '
+        'inputs ${session.inputNames}, outputs ${session.outputNames} '
+        'do not match the Laya agent contract',
+      );
+    }
+    return LoadedRuntime(
+      session: session,
+      encoder: encoder,
+      temperature: settings.temperature,
+      temperatureByOptions: settings.temperatureByOptions,
+      maxLen: settings.maxLen,
+      headMaxLen: settings.headMaxLen,
     );
   }
 }

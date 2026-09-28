@@ -4,6 +4,25 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:laya_flutter_example/main.dart';
 
 void main() {
+  testWidgets('autostart without bundle shows actionable setup guidance', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const ExampleApp(autostart: true, snakeCheckpointDir: ''),
+    );
+    await tester.pump();
+
+    expect(
+      find.textContaining('Snake checkpoint is not configured.'),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('--dart-define=LAYA_SNAKE_CHECKPOINT_DIR='),
+      findsOneWidget,
+    );
+    expect(find.text('Opening…'), findsNothing);
+  });
+
   testWidgets('idle example home shows Laya without opening a session', (
     WidgetTester tester,
   ) async {

@@ -61,7 +61,7 @@ class _SnakeScreenState extends State<SnakeScreen> {
       // One console line per finished attempt; no on-screen log chrome.
       onChoiceRecord: (SnakeChoiceRecord record) {
         // Prefix identifies this binary in device logs after a rebuild.
-        debugPrint('build-marker 0014 ${record.toString()}');
+        debugPrint('build-marker 0016 ${record.toString()}');
       },
     );
   }

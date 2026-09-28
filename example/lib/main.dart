@@ -13,6 +13,8 @@ import 'package:path_provider/path_provider.dart';
 
 import 'snake_screen.dart';
 
+const String _snakeCheckpointDir = String.fromEnvironment('LAYA_CACHE_DIR');
+
 void main() {
   runApp(const ExampleApp(autostart: true));
 }
@@ -56,17 +58,27 @@ class ExampleApp extends StatelessWidget {
   ///
   /// When [autostart] is false (the default), the home does not begin session
   /// open on mount. When true, the home starts the open-then-navigate path once.
-  const ExampleApp({super.key, this.autostart = false});
+  const ExampleApp({
+    super.key,
+    this.autostart = false,
+    this.snakeCheckpointDir = _snakeCheckpointDir,
+  });
 
   /// When true, the home begins opening the runtime without a play control.
   final bool autostart;
+
+  /// Optional cache directory for the basic multilingual model.
+  final String snakeCheckpointDir;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'laya_flutter example',
       theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
-      home: ExampleHomePage(autostart: autostart),
+      home: ExampleHomePage(
+        autostart: autostart,
+        snakeCheckpointDir: snakeCheckpointDir,
+      ),
     );
   }
 }
@@ -76,10 +88,17 @@ class ExampleHomePage extends StatefulWidget {
   /// Creates the home page.
   ///
   /// When [autostart] is true, starts the existing open path once after mount.
-  const ExampleHomePage({super.key, this.autostart = false});
+  const ExampleHomePage({
+    super.key,
+    this.autostart = false,
+    this.snakeCheckpointDir = _snakeCheckpointDir,
+  });
 
   /// When true, begin open without a play button.
   final bool autostart;
+
+  /// Optional cache directory for the basic multilingual model.
+  final String snakeCheckpointDir;
 
   @override
   State<ExampleHomePage> createState() => _ExampleHomePageState();
@@ -114,7 +133,9 @@ class _ExampleHomePageState extends State<ExampleHomePage> {
     });
     try {
       final LoadedRuntime runtime = await LayaFlutter.open(
-        await resolveExampleCache(),
+        widget.snakeCheckpointDir.trim().isEmpty
+            ? await resolveExampleCache()
+            : Directory(widget.snakeCheckpointDir),
       );
       if (!mounted) {
         await runtime.close();

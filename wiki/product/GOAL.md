@@ -3,7 +3,7 @@ id: product-goal
 title: Product goal
 status: active
 owner: unassigned
-last_verified: 2026-09-27
+last_verified: 2026-09-28
 applies_to: ["**"]
 summary: Offline Flutter access to Laya's typed decisions, matching Python on a frozen fixture set, with a classic Snake example.
 ---
@@ -29,7 +29,7 @@ Flutter developers call the library from their own apps. Android and iOS are req
 
 - Weights arrive by a one-time Hugging Face download. Later runs use the local copy.
 - Quality bar: the choice label, the score level, and the noul side match Python Laya on a frozen fixture set. The noul side is the slot with the higher probability.
-- Snake is classic: a wall or the snake's own body ends the game, food appears on a random empty cell, and the model chooses a left turn, a right turn, or straight ahead relative to the current heading. There is no step timer.
+- Snake is classic: a wall or the snake's own body ends the game, food appears on a random empty cell, and the model chooses one of four absolute directions (`up`, `down`, `left`, `right`). The example applies that choice without substitution. There is no step timer. Work item 0016 supersedes the earlier relative-turn wording for the example.
 - The package code is Apache-2.0, the same licence as the Laya weights.
 - Ship every platform one runtime covers. If one runtime does not cover desktop or web, Android and iOS are still required.
 - Which checkpoints to load, and which offline Python features to expose, are chosen by research against what a Flutter caller needs. The stated preference is the full offline feature set when that set is appropriate on device.

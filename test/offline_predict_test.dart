@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter_onnxruntime/flutter_onnxruntime.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:laya_flutter/laya_flutter.dart';
 import 'package:laya_flutter/src/checkpoint_store.dart';
+import 'package:laya_flutter/src/onnx_graph.dart';
 
 void main() {
   test('empty question list throws and does not invent answers', () async {
@@ -100,6 +103,193 @@ void main() {
       );
       expect(downloadCalls, 0);
     },
+  );
+
+  test(
+    'local bundle reports missing files without opening a session',
+    () async {
+      final Directory bundle = await Directory.systemTemp.createTemp(
+        'laya_local_missing_',
+      );
+      addTearDown(() => bundle.delete(recursive: true));
+      var sessionCalls = 0;
+      Future<OrtSession> mustNotOpen(String path) async {
+        sessionCalls += 1;
+        throw StateError('session should not open');
+      }
+
+      await expectLater(
+        LayaFlutter.openLocalBundle(bundle, createSession: mustNotOpen),
+        throwsA(
+          isA<StateError>().having(
+            (StateError e) => e.message,
+            'message',
+            contains('laya.onnx'),
+          ),
+        ),
+      );
+      await File('${bundle.path}/laya.onnx').writeAsBytes(<int>[1]);
+      await expectLater(
+        LayaFlutter.openLocalBundle(bundle, createSession: mustNotOpen),
+        throwsA(
+          isA<StateError>().having(
+            (StateError e) => e.message,
+            'message',
+            contains('tokenizer.json'),
+          ),
+        ),
+      );
+      expect(sessionCalls, 0);
+    },
+  );
+
+  test(
+    'local bundle rejects malformed companions before session open',
+    () async {
+      final Directory bundle = await Directory.systemTemp.createTemp(
+        'laya_local_malformed_',
+      );
+      addTearDown(() => bundle.delete(recursive: true));
+      await _writeLocalArtifacts(bundle);
+      var sessionCalls = 0;
+      Future<OrtSession> mustNotOpen(String path) async {
+        sessionCalls += 1;
+        throw StateError('session should not open');
+      }
+
+      await File('${bundle.path}/tokenizer.json').writeAsString('{bad json');
+      await expectLater(
+        LayaFlutter.openLocalBundle(bundle, createSession: mustNotOpen),
+        throwsA(
+          isA<StateError>().having(
+            (StateError e) => e.message,
+            'message',
+            contains('Invalid local tokenizer.json'),
+          ),
+        ),
+      );
+
+      await File('${bundle.path}/tokenizer.json').writeAsString(_testTokenizer);
+      await File('${bundle.path}/rl_agent_config.json').writeAsString('[]');
+      await expectLater(
+        LayaFlutter.openLocalBundle(bundle, createSession: mustNotOpen),
+        throwsA(
+          isA<StateError>().having(
+            (StateError e) => e.message,
+            'message',
+            contains('Invalid local rl_agent_config.json'),
+          ),
+        ),
+      );
+      expect(sessionCalls, 0);
+    },
+  );
+
+  test('local bundle uses its graph and rejects incompatible names', () async {
+    final Directory bundle = await Directory.systemTemp.createTemp(
+      'laya_local_contract_',
+    );
+    addTearDown(() => bundle.delete(recursive: true));
+    await _writeLocalArtifacts(bundle);
+    final List<String> openedPaths = <String>[];
+    Future<OrtSession> compatible(String path) async {
+      openedPaths.add(path);
+      return OrtSession.fromMap(<String, Object>{
+        'sessionId': 'metadata-only',
+        'inputNames': onnxAgentInputNames,
+        'outputNames': onnxAgentOutputNames,
+      });
+    }
+
+    final LoadedRuntime runtime = await LayaFlutter.openLocalBundle(
+      bundle,
+      createSession: compatible,
+    );
+    expect(openedPaths, <String>['${bundle.path}/laya.onnx']);
+    expect(runtime.maxLen, 128);
+    expect(runtime.headMaxLen, 64);
+
+    Future<OrtSession> incompatible(String path) async {
+      openedPaths.add(path);
+      return OrtSession.fromMap(<String, Object>{
+        'sessionId': 'metadata-only',
+        'inputNames': <String>['wrong_input'],
+        'outputNames': onnxAgentOutputNames,
+      });
+    }
+
+    await expectLater(
+      LayaFlutter.openLocalBundle(bundle, createSession: incompatible),
+      throwsA(
+        isA<StateError>().having(
+          (StateError e) => e.message,
+          'message',
+          contains('Incompatible local ONNX graph'),
+        ),
+      ),
+    );
+    Future<OrtSession> wrongOutputs(String path) async {
+      openedPaths.add(path);
+      return OrtSession.fromMap(<String, Object>{
+        'sessionId': 'metadata-only',
+        'inputNames': onnxAgentInputNames,
+        'outputNames': <String>['wrong_output'],
+      });
+    }
+
+    await expectLater(
+      LayaFlutter.openLocalBundle(bundle, createSession: wrongOutputs),
+      throwsA(
+        isA<StateError>().having(
+          (StateError e) => e.message,
+          'message',
+          contains('Incompatible local ONNX graph'),
+        ),
+      ),
+    );
+    expect(openedPaths, hasLength(3));
+  });
+
+  test('real example requires a compile-time local Snake bundle', () {
+    final String source = File('example/lib/main.dart').readAsStringSync();
+    expect(
+      source,
+      contains("String.fromEnvironment(\n  'LAYA_SNAKE_CHECKPOINT_DIR'"),
+    );
+    expect(source, contains('LayaFlutter.openLocalBundle('));
+    expect(source, isNot(contains('LayaFlutter.open(')));
+    expect(source, contains('Snake checkpoint is not configured.'));
+  });
+}
+
+final String _testTokenizer = jsonEncode(<String, Object?>{
+  'version': '1.0',
+  'truncation': null,
+  'padding': null,
+  'added_tokens': <Object>[],
+  'normalizer': null,
+  'pre_tokenizer': <String, String>{'type': 'Whitespace'},
+  'post_processor': null,
+  'decoder': null,
+  'model': <String, Object>{
+    'type': 'WordLevel',
+    'vocab': <String, int>{
+      '<pad>': 0,
+      '<bos>': 1,
+      '<eos>': 2,
+      '<mask>': 3,
+      '<unk>': 4,
+    },
+    'unk_token': '<unk>',
+  },
+});
+
+Future<void> _writeLocalArtifacts(Directory directory) async {
+  await File('${directory.path}/laya.onnx').writeAsBytes(<int>[1]);
+  await File('${directory.path}/tokenizer.json').writeAsString(_testTokenizer);
+  await File('${directory.path}/rl_agent_config.json').writeAsString(
+    '{"temperature":[1.0,1.0,1.0],"temperature_by_options":{},'
+    '"max_len":128,"head_max_len":64}',
   );
 }
 

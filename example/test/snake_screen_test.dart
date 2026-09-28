@@ -14,12 +14,13 @@ String _readSnakeScreenSource() {
 
 Map<String, LayaAnswer> _answersFor(String key) {
   return <String, LayaAnswer>{
-    'turn': LayaAnswer.choice(
+    'move': LayaAnswer.choice(
       choice: key,
       probabilities: <String, double>{
+        'up': key == 'up' ? 1.0 : 0.0,
+        'down': key == 'down' ? 1.0 : 0.0,
         'left': key == 'left' ? 1.0 : 0.0,
         'right': key == 'right' ? 1.0 : 0.0,
-        'straight': key == 'straight' ? 1.0 : 0.0,
       },
       confidence: 1.0,
     ),
@@ -61,7 +62,7 @@ void main() {
       isTrue,
       reason: 'optional override seam must exist for session-free proof',
     );
-    // Reject a local turn table that never reaches the model.
+    // Reject a local move table that never reaches the model.
     expect(source.contains("'left', 'right', 'straight'"), isFalse);
     expect(source.contains('hard-coded'), isFalse);
   });
@@ -104,17 +105,14 @@ void main() {
             predictOverride: (Object state, Object questions) async {
               predictCalls += 1;
               // Default head is (20, 20) facing east on the 40 by 40 board.
-              // One left turns north; straight steps reach row 0; the next
-              // straight hits the north wall. The following call is the
+              // Up steps reach row 0; the next up hits the north wall.
+              // The following call is the
               // new run and must advance.
               const int centerRow = 40 ~/ 2;
               const int deathCall = centerRow + 1;
               const int postRestartCall = deathCall + 1;
-              if (predictCalls == 1) {
-                return _answersFor('left');
-              }
               if (predictCalls <= postRestartCall) {
-                return _answersFor('straight');
+                return _answersFor('up');
               }
               // Stop the loop without ending; must not trigger another new-run.
               throw StateError('predict stop');
