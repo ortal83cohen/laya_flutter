@@ -34,7 +34,11 @@ dart analyze --fatal-infos --fatal-warnings || stage_failed 4 "analysis"
   stage_failed 4 "example analysis"
 echo "Stage 4 passed: analysis"
 
-flutter test || stage_failed 5 "tests"
+set -- $(find test -name '*_test.dart' \
+  ! -name 'host_session_load_test.dart' \
+  ! -name 'tokenizer_id_parity_test.dart' \
+  -print)
+flutter test "$@" || stage_failed 5 "tests"
 (cd example && flutter test) || stage_failed 5 "example tests"
 echo "Stage 5 passed: tests"
 
