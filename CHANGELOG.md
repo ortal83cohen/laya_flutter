@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 - 2026-09-28
+
+- Automated patch release from main.
+
 ## 0.1.1 - 2026-09-28
 
 - Fix README demo GIF URL for pub.dev (absolute raw GitHub link).
