@@ -2,7 +2,7 @@ name: laya_flutter
 description: >-
   Offline multilingual Laya inference for Flutter. Open an ONNX agent from cache
   or a local bundle, then run typed predict for choice, score, and noul questions.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/ortal83cohen/laya_flutter
 homepage: https://github.com/ortal83cohen/laya_flutter
 issue_tracker: https://github.com/ortal83cohen/laya_flutter/issues
@@ -18,6 +18,9 @@ topics:
 screenshots:
   - description: >-
       Classic Snake on iOS driven by offline Laya predict at each decision step.
+    path: screenshots/example.png
+  - description: >-
+      Animated Snake gameplay driven by offline Laya predict.
     path: screenshots/example.gif
 
 environment:

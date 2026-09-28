@@ -1,6 +1,7 @@
 # laya_flutter
 
 [![pub package](https://img.shields.io/pub/v/laya_flutter.svg)](https://pub.dev/packages/laya_flutter)
+[![checks](https://github.com/ortal83cohen/laya_flutter/actions/workflows/checks.yml/badge.svg)](https://github.com/ortal83cohen/laya_flutter/actions/workflows/checks.yml)
 [![pub points](https://img.shields.io/pub/points/laya_flutter)](https://pub.dev/packages/laya_flutter/score)
 [![popularity](https://img.shields.io/pub/popularity/laya_flutter)](https://pub.dev/packages/laya_flutter/score)
 [![likes](https://img.shields.io/pub/likes/laya_flutter)](https://pub.dev/packages/laya_flutter/score)
@@ -12,7 +13,7 @@ The library downloads the published checkpoint on first open, tokenizes state an
 questions, and returns typed answers for **choice**, **score**, and **noul**
 items—no cloud round trip.
 
-![Snake example driven by offline Laya predict](screenshots/example.gif)
+![Snake example driven by offline Laya predict](https://raw.githubusercontent.com/ortal83cohen/laya_flutter/main/screenshots/example.gif)
 
 Please [open an issue](https://github.com/ortal83cohen/laya_flutter/issues/new)
 if something breaks or the docs should say more; fixes and copy improvements
@@ -39,7 +40,7 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  laya_flutter: ^0.1.0
+  laya_flutter: ^0.1.1
 ```
 
 On first use, `LayaFlutter.open` needs network access to fetch the multilingual
