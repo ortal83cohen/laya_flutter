@@ -259,12 +259,9 @@ void main() {
     expect(source, contains('AppSettings.snakeCheckpointDir'));
     expect(source, contains('LayaFlutter.openLocalBundle('));
     expect(source, isNot(contains('LayaFlutter.open(')));
-    expect(
-      source,
-      contains(
-        'Snake checkpoint is not configured. Set it in app_settings.dart.',
-      ),
-    );
+    const String expectedSetupError =
+        'Snake checkpoint is not configured. Set it in app_settings.dart.';
+    expect(source, contains(expectedSetupError));
   });
 }
 
