@@ -1,0 +1,28 @@
+id: "0018-pub-publish-clean-worktree"
+title: "Keep the pub.dev publish checkout clean"
+route: quick
+phase: verify
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers:
+  - id: F-001
+    from: RECORD.md
+    severity: IMPORTANT
+    status: open
+    summary: "Full local check suite is blocked because the Flutter SDK cache is read-only."
+  - id: F-002
+    from: RECORD.md
+    severity: IMPORTANT
+    status: open
+    summary: "The hosted publish workflow has not rerun; publication is unverified."
+
+followups: [ ]
+decisions: [ ]
+escalations: [ ]
+goal_check: null
+compound: skipped
+compound_reason: "A targeted workflow guard; no reusable product learning was established."

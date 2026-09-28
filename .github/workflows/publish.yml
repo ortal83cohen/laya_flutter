@@ -38,6 +38,25 @@ jobs:
         with:
           channel: stable
           version: 3.47.0
+      # Dependency resolution may regenerate the checked-in desktop registrants in the
+      # example app. Restore only those generated files so pub's clean-git publish check
+      # sees the exact versioned package tree.
+      - name: Restore generated example registrants
+        run: |
+          git restore -- \
+            example/linux/flutter/generated_plugin_registrant.cc \
+            example/linux/flutter/generated_plugin_registrant.h \
+            example/linux/flutter/generated_plugins.cmake \
+            example/windows/flutter/generated_plugin_registrant.cc \
+            example/windows/flutter/generated_plugin_registrant.h \
+            example/windows/flutter/generated_plugins.cmake
+          git diff --exit-code -- \
+            example/linux/flutter/generated_plugin_registrant.cc \
+            example/linux/flutter/generated_plugin_registrant.h \
+            example/linux/flutter/generated_plugins.cmake \
+            example/windows/flutter/generated_plugin_registrant.cc \
+            example/windows/flutter/generated_plugin_registrant.h \
+            example/windows/flutter/generated_plugins.cmake
       - name: Publish - dry run
         run: flutter pub publish --dry-run
       - name: Publish to pub.dev
