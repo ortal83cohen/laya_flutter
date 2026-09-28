@@ -1,0 +1,43 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0003-classic-snake"
+title: "Classic Snake example driven by offline Laya predict"
+route: full
+phase: done
+round: 2
+verdict: PASS
+owner_agent: null
+created: "2026-09-27"
+updated: "2026-09-27"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "This slice advances SC-003. Device launches (SC-005) and extra platforms (SC-006) stay later. The library predict API from 0002 is closed and is not redesigned here."
+  - round: 1
+    verdict: CONDITIONAL
+    action: revise-plan
+    reason: "plan-review-01 F-001: dropped user-visible predict-failure UI so the plan stays inside the contract. F-002: question id is turn. F-003: walls are cells outside width by height, example is 12 by 12. F-004 and F-005: right-turn and post-collision step scenarios added."
+  - round: 2
+    verdict: PASS
+    action: fix-directly
+    reason: "plan-review-02 PASS with zero blockers. Residual F-001 was risk-table wording only; the mitigation now matches the contract (no invented turn, no advance, no failure UI). No third validation round. Criteria frozen and implementation started."
+  - round: 1
+    verdict: FAIL
+    action: return-to-implement
+    reason: "impl-review-01 F-001, F-002, and F-003 are implementation defects. Tests must assert the question and state that step sends, and must fail if a logic test opens a session. Screen step loop must not spin when a step returns without ending and without moving."
+  - round: 2
+    verdict: PASS
+    action: accept
+    reason: "impl-review-02 PASS. Round-01 probes for AC-002, AC-007, and AC-008 now fail when the behaviour is wrong. No blockers. Proceed to document."
+
+escalations: []
+
+goal_check: SC-003
+compound: skipped
+compound_reason: "non-obvious failed: relative-turn keys, await-gated steps, no-timer rule, and anti-spin on unchanged cells are recoverable from GOAL closed assumptions plus the final example sources and tests; would not force a later agent to repeat the investigation"

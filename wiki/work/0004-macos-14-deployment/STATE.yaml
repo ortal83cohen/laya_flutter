@@ -1,0 +1,23 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0004-macos-14-deployment"
+title: "Raise the example macOS deployment target to 14.0"
+route: quick
+phase: done
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-27"
+updated: "2026-09-27"
+
+blockers: []
+
+followups: []
+
+decisions: []
+
+escalations: []
+
+goal_check: null
+compound: skipped
+compound_reason: "Deployment-target bump only. No new learning that passes the compound test."

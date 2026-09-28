@@ -1,0 +1,9 @@
+# Schema-only example. These rows are not checkpoint measurements.
+{"model":"base-model-example","id":"validation-001","choice":"straight","loop_detected":false}
+{"model":"base-model-example","id":"validation-002","choice":"straight","loop_detected":false}
+{"model":"base-model-example","id":"validation-003","choice":"straight","loop_detected":true}
+{"model":"base-model-example","id":"validation-004","choice":"left","loop_detected":true}
+{"model":"snake-finetuned-example","id":"validation-001","choice":"straight","loop_detected":false}
+{"model":"snake-finetuned-example","id":"validation-002","choice":"straight","loop_detected":false}
+{"model":"snake-finetuned-example","id":"validation-003","choice":"left","loop_detected":false}
+{"model":"snake-finetuned-example","id":"validation-004","choice":"straight","loop_detected":false}

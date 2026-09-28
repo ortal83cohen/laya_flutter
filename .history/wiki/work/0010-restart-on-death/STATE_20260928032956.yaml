@@ -1,0 +1,43 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0010-restart-on-death"
+title: "Restart the example Snake game when the snake dies"
+route: full
+phase: done
+round: 3
+verdict: PASS
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 1
+    verdict: FAIL
+    action: revise-research
+    reason: "research-review-01 F-001: the no-session screen check is now an optional predict override, so Unresolved stays empty. F-002: the restart-button ban is this slice's decision; 0005 line 18 bans only a play button. F-003 and F-004 patched in the same edit."
+  - round: 1
+    verdict: CONDITIONAL
+    action: revise-plan
+    reason: "plan-review-01 F-001: replacement board size is 120 by 120, matching the screen. F-002: the controller field must stop being late final so replacement can assign. F-003: the screen seam is an optional predict override, not an open choice."
+  - round: 2
+    verdict: PASS
+    action: accept
+    reason: "research-review-02 and plan-review-02 PASS. Round-01 findings did not recur."
+  - round: 2
+    verdict: PASS
+    action: revise-plan
+    reason: "After round 02, work item 0009 set the screen to 80 by 80. Interfaces now say eighty and tell the implementer to stop if the screen literals differ. Criteria do not name a board size. No third validation round."
+  - round: 3
+    verdict: PASS
+    action: accept
+    reason: "The user directed documentation to close treating verification as accepted. The implementation-review agent was interrupted and did not write impl-review-01.md."
+
+escalations: []
+
+goal_check: null
+compound: skipped
+compound_reason: "non-obvious failed: death-then-replace is visible in example/lib/snake_screen.dart and in the wall-then-new-run tests"

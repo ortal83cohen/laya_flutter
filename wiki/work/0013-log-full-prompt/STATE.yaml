@@ -1,0 +1,27 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0013-log-full-prompt"
+title: "Log the full Snake prompt and the model answer"
+route: quick
+phase: done
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "Continued after the log landed. The living turn instructions now equal the hunger-and-wall sentence from 0011 R-001. Option text names the turn only and does not rank a key. State string stays heading, head, food, and neighbour kinds. 0011 remains in validate and is not implemented here."
+
+escalations: []
+
+goal_check: null
+compound: skipped
+compound_reason: "Debug log only. No new learning that passes the compound test."

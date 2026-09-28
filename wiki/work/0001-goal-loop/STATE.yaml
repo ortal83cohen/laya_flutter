@@ -1,0 +1,27 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0001-goal-loop"
+title: "Pursue a product goal as slices through the existing pipeline"
+route: full
+phase: done
+round: 1
+verdict: PASS
+owner_agent: null
+created: "2026-09-27"
+updated: "2026-09-27"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 1
+    verdict: PASS
+    action: annotate-only
+    reason: "Implementation review found no defects. Compound skipped because the lesson is the convention itself."
+
+escalations: []
+
+goal_check: null
+compound: skipped
+compound_reason: "non-obvious — the lesson is wiki/conventions/goal-loop.md itself, so a later agent reading that file would not repeat the investigation"

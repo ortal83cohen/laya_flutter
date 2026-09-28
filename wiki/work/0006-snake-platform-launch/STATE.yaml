@@ -1,0 +1,39 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0006-snake-platform-launch"
+title: "Show the Snake example on Android and iOS"
+route: full
+phase: verify
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-27"
+updated: "2026-09-28"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "This slice advances SC-005. The Snake screen must appear on Android and on iOS, confirmed by a screenshot, not only by a log line. Library open and predict stay closed. Snake rules stay closed. Weights stay out of the pub package. Extra platforms named by runtime research (macOS, Windows, Linux, web) are SC-006 and are not this slice, except where a blocker on this host is recorded so the next slice does not rediscover it."
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "Slice decisions from research, not a measured bake-off. Cache: the example passes an app-writable directory to the existing open; a first-run download stays available; this host may copy the existing cache in for the visual run. Tokenizer: the example override stops throwing and encodes tokenizer.json with dart_sentencepiece_tokenizer; the library keeps its hf_tokenizers pin; a host id check against hf_tokenizers on the frozen fixture strings is required. iOS deployment target is at least 16. Proof is a screenshot of the Snake AppBar and board on emulator-5554 and on a booted iOS simulator. Proguard keep is out of scope while release minify stays off."
+  - round: 1
+    verdict: FAIL
+    action: revise-plan
+    reason: "research-review-01: production entry is autostart, open is at main.dart line 100, and there is no Play Snake button. plan-review-01: path_provider is a direct example dependency and the directory is application support plus laya_flutter; host parity runs in the package test tree with addSpecialTokens false; host-copy ONNX must be a regular 1290466290-byte file; tokenToId is required; AC-010 covers the seed."
+  - round: 2
+    verdict: PASS
+    action: accept
+    reason: "research-review-02 and plan-review-02 both PASS with zero blockers. Criteria frozen and implementation started."
+
+escalations: []
+
+goal_check: SC-005
+compound: null
+compound_reason: null

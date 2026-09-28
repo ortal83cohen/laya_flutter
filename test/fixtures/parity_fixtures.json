@@ -1,0 +1,89 @@
+{
+  "checkpoint": "convaiinnovations/laya-multilingual",
+  "python_runtime": "laya.onnx_agent.ONNXAgent",
+  "python_laya_version": "0.3.20",
+  "fixtures": [
+    {
+      "id": "en_short",
+      "language": "en",
+      "state": "The light is warm and the room feels calm.",
+      "questions": {
+        "color": {
+          "type": "choice",
+          "instructions": "Pick the best matching color word",
+          "criteria": {
+            "red": "warm primary",
+            "green": "cool primary",
+            "blue": "cold primary"
+          }
+        },
+        "severity": {
+          "type": "score",
+          "instructions": "Rate how severe the situation is",
+          "criteria": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "ok": {
+          "type": "noul",
+          "instructions": "Is the situation acceptable?",
+          "criteria": {
+            "false": "not acceptable",
+            "true": "acceptable"
+          }
+        }
+      },
+      "python": {
+        "choice_label": "green",
+        "score_level": 0.0537,
+        "noul_side": "true",
+        "choice_question_id": "color",
+        "score_question_id": "severity",
+        "noul_question_id": "ok"
+      }
+    },
+    {
+      "id": "he_short",
+      "language": "he",
+      "state": "האור חם והחדר מרגיש רגוע.",
+      "questions": {
+        "color": {
+          "type": "choice",
+          "instructions": "Pick the best matching color word",
+          "criteria": {
+            "red": "warm primary",
+            "green": "cool primary",
+            "blue": "cold primary"
+          }
+        },
+        "severity": {
+          "type": "score",
+          "instructions": "Rate how severe the situation is",
+          "criteria": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "ok": {
+          "type": "noul",
+          "instructions": "Is the situation acceptable?",
+          "criteria": {
+            "false": "not acceptable",
+            "true": "acceptable"
+          }
+        }
+      },
+      "python": {
+        "choice_label": "red",
+        "score_level": 0.3417,
+        "noul_side": "false",
+        "choice_question_id": "color",
+        "score_question_id": "severity",
+        "noul_question_id": "ok"
+      }
+    }
+  ]
+}

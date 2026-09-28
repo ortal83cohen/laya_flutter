@@ -1,0 +1,31 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0008-snake-choice-log"
+title: "Log every Snake model choice with the state that produced it"
+route: full
+phase: verify
+round: 2
+verdict: PASS
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 1
+    verdict: FAIL
+    action: revise-research
+    reason: "research-review-01 F-001 BLOCKER: library-API freeze citation pointed at classic-snake lines 15-35; the sentence is line 39. F-002 and F-003 were fixed in the same research edit."
+  - round: 2
+    verdict: PASS
+    action: accept
+    reason: "research-review-02 PASS, zero blockers. F-001 did not recur. plan-review-01 PASS stands after the 0010 id correction."
+
+escalations: []
+
+goal_check: null
+compound: null
+compound_reason: null

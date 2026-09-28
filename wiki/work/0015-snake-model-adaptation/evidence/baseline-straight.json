@@ -1,0 +1,16 @@
+{
+  "status": "measured-local",
+  "command": "python3 tool/snake_eval.py --fixture tool/snake_eval_fixture.jsonl --baseline-straight",
+  "model": "baseline_straight_policy",
+  "not_checkpoint_metric": true,
+  "split": "validation",
+  "rows": 4,
+  "choice_accuracy": 0.75,
+  "teacher_agreement": 0.75,
+  "collision_rate": 0.0,
+  "food_reached_rate": 0.0,
+  "mean_progress_delta": 0.5,
+  "loop_rate": null,
+  "loop_rate_note": "requires trajectory predictions with loop_detected",
+  "training_status": "not run"
+}

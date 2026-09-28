@@ -1,0 +1,24 @@
+---
+description: Where agent instructions, skills, subagents and path-scoped rules must live so that both Claude Code and Cursor read them
+globs: AGENTS.md, CLAUDE.md, .claude/**, .cursor/**
+alwaysApply: false
+---
+
+# Agent configuration rules
+
+You are editing the configuration both Claude Code and Cursor read. Getting the location wrong makes a rule silently invisible to one of them.
+
+- `AGENTS.md` is the single source of always-on instructions. Under 200 lines. Cursor reads it natively; Claude Code reads it through the `@AGENTS.md` import in `CLAUDE.md`.
+- `CLAUDE.md` starts with exactly `@AGENTS.md` and holds only Claude-specific notes below it. Cursor loads both files, so anything substantive here enters a Cursor context twice.
+- Skills go in `.claude/skills/<name>/SKILL.md`. Both tools read that path. Never duplicate a skill under `.cursor/skills/`.
+- Subagents go in `.claude/agents/<name>.md`. Both tools read that path.
+- Never create `.claude/commands/` or `.cursor/commands/`. Cursor does not read Claude commands and command arguments are unreliable there. Write the workflow as a skill.
+- Path-scoped rules are the one thing that must exist twice: `.claude/rules/<name>.md` uses a `paths` frontmatter field, `.cursor/rules/<name>.mdc` uses `globs` plus `alwaysApply`. Neither tool reads the other's format. Change the pair in the same commit and keep the names identical.
+- `.cursor/rules/` files must use the `.mdc` extension. A `.md` file there is silently ignored.
+- Cursor rule frontmatter accepts only `description`, `globs` and `alwaysApply`. Any other key is invalid.
+- A skill's `name` must match its directory name. `description` plus `when_to_use` is truncated at 1536 characters in the listing, so put the trigger case first.
+- Nothing whose absence would break the workflow may live only under `.claude/`. Cursor's reading of that directory is behind a user setting.
+
+Run `python3 tools/lint_wiki.py` before reporting the edit complete.
+
+This file mirrors `.claude/rules/agent-config.md`. Change both in the same commit.

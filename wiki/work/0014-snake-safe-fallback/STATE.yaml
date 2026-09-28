@@ -1,0 +1,33 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0014-snake-safe-fallback"
+title: "Improve model-guided Snake decisions with structured context and logs"
+route: full
+phase: verify
+round: 0
+verdict: null
+owner_agent: main-agent
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+followups:
+  - summary: "Run the Flutter example tests after a Dart/Flutter SDK satisfying pubspec ^3.13.0 is available."
+    severity: IMPORTANT
+    owner: "unassigned"
+
+decisions:
+  - round: 0
+    verdict: null
+    action: revise-plan
+    reason: "The latest user direction explicitly rejects fallback, blocking, repair and choice replacement; the work item contract was revised before implementation to keep the model as the sole direction authority."
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "Direct Dart analysis is clean; Flutter tests remain unverified because the installed Dart 3.10.3 does not satisfy ^3.13.0 and the Flutter wrapper cannot update engine.stamp in its cache."
+
+escalations: []
+
+goal_check: SC-003
+compound: null
+compound_reason: null

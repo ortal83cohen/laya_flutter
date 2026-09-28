@@ -1,0 +1,47 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0002-offline-predict"
+title: "Offline Laya typed decisions in Flutter"
+route: full
+phase: done
+round: 3
+verdict: PASS
+owner_agent: null
+created: "2026-09-27"
+updated: "2026-09-27"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "First slice advances SC-002. SC-001 and SC-004 are the same slice because a parity result needs a local checkpoint and a network-free call. Snake (SC-003) and device launches (SC-005, SC-006) wait until this slice has a runtime."
+  - round: 1
+    verdict: FAIL
+    action: revise-research
+    reason: "research-review-01 F-001: official main does ship scripts/export_onnx.py. Patched 00-research.md and research/runtime.md after re-reading the raw script on 2026-09-27. Plan U2 now prefers that exporter."
+  - round: 1
+    verdict: FAIL
+    action: revise-plan
+    reason: "plan-review-01 F-001 and F-002: fixtures and predict now commit the question map. F-003 closed in the same patch: public methods are LayaFlutter.open and predict."
+  - round: 2
+    verdict: PASS
+    action: annotate-only
+    reason: "research-review-02 and plan-review-02 passed. Research NIT on the options-table dynamo wording was patched in place; it does not reopen validation."
+  - round: 2
+    verdict: PASS
+    action: annotate-only
+    reason: "U1 passed after two harness retries. flutter test cannot register the plugin. integration_test on macOS can. Errno 1 was the app sandbox; DebugProfile.entitlements gained a read exception for the cache directory. Session inputs and outputs matched the ONNX agent contract. Evidence is session-load.md."
+  - round: 3
+    verdict: PASS
+    action: annotate-only
+    reason: "impl-review-01 PASS for AC-001 through AC-008. Document phase recorded product constraints, ADR 0002, and the macOS session-sandbox solution."
+
+escalations: []
+
+goal_check: SC-002
+compound: written
+compound_reason: "wiki/solutions/2026-09-27-macos-onnx-session-sandbox.md"

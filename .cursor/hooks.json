@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/lint_on_write.sh",
+        "timeout": 30
+      }
+    ]
+  }
+}

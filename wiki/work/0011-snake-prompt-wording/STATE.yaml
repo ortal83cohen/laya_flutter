@@ -1,0 +1,27 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0011-snake-prompt-wording"
+title: "Improve the Snake prompt so the model prefers a safe turn toward food"
+route: full
+phase: validate
+round: 0
+verdict: null
+owner_agent: planner
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "Research disagreement closed by the orchestrator before planning: change both the turn instructions and the state string. Instructions say the snake is hungry and should avoid walls. State keeps heading, head, food, and neighbour kinds, and adds Manhattan distance plus the food's relative side. Option verdicts stay the existing short Blocked/Best/Slower/Worse/Same/Open sentences. No confidence or survival criterion. Opening cell and tokenizer counts stay out of this slice."
+
+escalations: []
+
+goal_check: SC-003
+compound: null
+compound_reason: null

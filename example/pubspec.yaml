@@ -1,0 +1,29 @@
+name: laya_flutter_example
+description: Example application for laya_flutter.
+publish_to: none
+version: 1.0.0
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  laya_flutter:
+    path: ..
+  path_provider: ^2.1.5
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+# The published hf_tokenizers hook throws on Android and iOS (no prebuilt
+# binary). Override with a pure-Dart loader of the same tokenizer.json so
+# open can tokenize on mobile. The library package still pins hf_tokenizers.
+dependency_overrides:
+  hf_tokenizers:
+    path: third_party/hf_tokenizers
+
+flutter:
+  uses-material-design: true

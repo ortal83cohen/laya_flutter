@@ -1,0 +1,29 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0015-snake-model-adaptation"
+title: "Evaluate and prepare Snake-specific model adaptation"
+route: full
+phase: verify
+round: 0
+verdict: null
+owner_agent: main-agent
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+followups:
+  - summary: "Run base and Snake-finetuned checkpoint trajectories on the held-out fixture in a GPU-capable external environment."
+    severity: IMPORTANT
+    owner: "unassigned"
+
+decisions:
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "The configured checkpoint is multilingual base; the repository adds only reproducible evaluation plumbing and does not claim training."
+
+escalations: []
+
+goal_check: SC-003
+compound: null
+compound_reason: null

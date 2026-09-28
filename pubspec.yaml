@@ -1,0 +1,24 @@
+name: laya_flutter
+description: Laya Flutter library.
+version: 0.1.6
+repository: https://github.com/ortal83cohen/laya_flutter
+homepage: https://github.com/ortal83cohen/laya_flutter
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_onnxruntime: ^1.8.5
+  hf_tokenizers: ^1.2.2
+
+dev_dependencies:
+  dart_sentencepiece_tokenizer: ^1.4.1
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+

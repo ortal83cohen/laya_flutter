@@ -1,0 +1,23 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0012-log-build-marker"
+title: "Prefix Snake choice logs with a build marker"
+route: quick
+phase: done
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+
+followups: []
+
+decisions: []
+
+escalations: []
+
+goal_check: null
+compound: skipped
+compound_reason: "Log prefix only. No new learning that passes the compound test."

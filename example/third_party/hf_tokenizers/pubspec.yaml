@@ -1,0 +1,12 @@
+name: hf_tokenizers
+description: >-
+  Example-only stand-in. Loads tokenizer.json with dart_sentencepiece_tokenizer
+  so Android and iOS can tokenize without the published hf_tokenizers hook.
+publish_to: none
+version: 0.0.0
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  dart_sentencepiece_tokenizer: ^1.4.1

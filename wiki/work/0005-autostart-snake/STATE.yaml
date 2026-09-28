@@ -1,0 +1,39 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0005-autostart-snake"
+title: "Start the example Snake game without a play button"
+route: full
+phase: done
+round: 2
+verdict: PASS
+owner_agent: null
+created: "2026-09-27"
+updated: "2026-09-27"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "Example launch UX only. Library open and predict stay closed. Snake rules, relative turns, and the no-timer rule stay closed. VM widget tests must still pump without opening an ONNX session."
+  - round: 1
+    verdict: PASS
+    action: fix-directly
+    reason: "research-review-01 PASS, zero blockers. plan-review-01 PASS, zero blockers. F-001 IMPORTANT: the autostart scenario expected outcome now names navigation to Snake after a successful open. No second validation round; Goal and Interfaces already stated that navigation."
+  - round: 1
+    verdict: FAIL
+    action: revise-implementation
+    reason: "impl-review-01 F-001 is an implementation defect. The idle widget test must fail if mount schedules open while autostart is off. A second pump now still expects no opening label."
+  - round: 2
+    verdict: PASS
+    action: accept
+    reason: "impl-review-02 PASS. F-001 did not recur. Removing the autostart guard fails the idle widget test."
+
+escalations: []
+
+goal_check: null
+compound: skipped
+compound_reason: "non-obvious failed: the second-pump idle-test lesson is recoverable from example/test/widget_test.dart"

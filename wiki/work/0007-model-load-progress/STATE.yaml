@@ -1,0 +1,35 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0007-model-load-progress"
+title: "Show model-load progress on the example home"
+route: full
+phase: validate
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+
+followups: []
+
+decisions:
+  - round: 0
+    verdict: null
+    action: annotate-only
+    reason: "The example home meter must not invent a percentage with a wall-clock timer. This is a work-item decision. GOAL's no-step-timer rule applies to Snake steps and is not the authority for this limit."
+  - round: 1
+    verdict: FAIL
+    action: revise-research
+    reason: "research-review-01 F-001: the emulator minutes claim is now marked unverified. F-002: the fake-percentage rejection cites this work-item decision, not GOAL's Snake timer."
+  - round: 1
+    verdict: FAIL
+    action: revise-plan
+    reason: "plan-review-01 F-001: opening chrome is checked by source inspection of the opening branch, not a live open. F-002: that scenario's expected outcome now includes the absence of a wall-clock fake percentage."
+
+escalations: []
+
+goal_check: null
+compound: null
+compound_reason: null

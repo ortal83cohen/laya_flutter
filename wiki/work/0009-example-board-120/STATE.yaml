@@ -1,0 +1,23 @@
+# Work item state. The only mutable file in a work item folder.
+
+id: "0009-example-board-80"
+title: "Enlarge the example Snake board to 80 by 80"
+route: quick
+phase: done
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+
+followups: []
+
+decisions: []
+
+escalations: []
+
+goal_check: null
+compound: skipped
+compound_reason: "Board-size change only. No new learning that passes the compound test."

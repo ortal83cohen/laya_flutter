@@ -1,0 +1,42 @@
+# Acceptance criteria: Classic Snake example driven by offline Laya predict
+
+## Frozen
+
+- Frozen at: 2026-09-27
+- Frozen by: orchestrator, at the start of implementation
+
+## Criteria
+
+| ID | Traces | Criterion | How it is checked | Negative case |
+|---|---|---|---|---|
+| AC-001 | R-001 | When the controller needs a food cell and at least one empty cell exists, food shall be placed on an empty cell and shall not be placed on a cell occupied by the snake | Logic test with a fixed random source: assert the spawned cell is in the empty set and not in the body set | A spawn that lands on a body cell, or that places food when the test forces every candidate to be occupied without signalling failure |
+| AC-002 | R-002 | When a step builds the model request, the choice question shall use exactly the keys left, right, and straight, each described as a turn relative to the current heading, and the state shall be one short English string that names the cardinal heading, the head cell, the food cell, and the left, right, and ahead neighbour classifications as empty, wall, body, or food | Logic test on a fixed board: assert the keys, that descriptions mention relative turns, and that the state string contains heading, head, food, and the three neighbour classifications | Keys that are UP/DOWN/LEFT/RIGHT, boolean words, or A/B/C; a state that omits a required field; or a string-map state instead of one English string |
+| AC-003 | R-003 | When predict returns a relative-turn choice and the next cell is free, the snake shall change heading according to that choice relative to the prior heading and then move the head exactly one cell in the new heading | Logic test: heading east and choice left yields heading north and a one-cell move north; repeat for right and straight on fixed boards | A move of more than one cell, a heading that ignores the returned key, or an absolute-screen remapping that treats left as west regardless of prior heading |
+| AC-004 | R-004 | When the injected predict future for the current step remains incomplete, the snake cells shall stay unchanged even after fake time elapses, and when that future later completes with a choice the board shall advance exactly one cell for that step | Logic test: start a step with an incomplete future, elapse fake time, assert identical snake cells, complete the future, assert a single-cell advance | Snake cells that change while the future is incomplete, or more than one cell of progress from a single completion |
+| AC-005 | R-005 | When the Snake screen Dart sources are inspected, they shall contain no Timer, no Future.delayed, and no Ticker constructions | Automated source inspection or a dedicated test over the Snake screen modules under the example application library | Any Timer, Future.delayed, or Ticker (including AnimationController-driven tickers) present in those modules |
+| AC-006 | R-006 | When the head’s next cell after applying the model’s relative turn is a wall or a cell of the snake’s own body, the game shall enter an ended state and shall not continue stepping as a live run | Logic tests for a wall collision and a self-collision: assert ended is true and further step attempts do not move the snake as a continuing play | The snake occupying the wall cell as a live head, or continuing to step after a body collision |
+| AC-007 | R-007 | When the step’s question text is inspected, it shall not include planner narrative and shall not instruct a safety shield that overrides or filters the model’s chosen turn | Logic test or fixture assertion over the built question instructions and option descriptions | Instructions that tell the model to plan multi-step paths as required text, or post-answer filtering that replaces the returned key with a different turn |
+
+## Non-functional criteria
+
+| ID | Traces | Criterion | How it is checked | Negative case |
+|---|---|---|---|---|
+| AC-008 | R-004 | When the classic-rules and await-gate logic tests run, they shall inject a predict function and shall not open an ONNX session | Read the test setup: assert predict is replaced by a test double; assert no LayaFlutter.open or session-creating call runs in those tests | A Snake logic test that calls LayaFlutter.open or otherwise creates an ONNX session |
+| AC-009 | R-002, R-003 | When the example Snake screen runs a step against a loaded runtime, it shall call the real LoadedRuntime.predict rather than a hard-coded turn table | Code review or a thin integration check that the screen’s predict closure delegates to LoadedRuntime.predict | A Snake screen that never calls LoadedRuntime.predict and instead picks turns locally without the model |
+
+## Explicitly not required
+
+Android and iOS launches (SC-005). Builds or launches on extra platforms (SC-006).
+
+Any redesign of LayaFlutter.open or LoadedRuntime.predict.
+
+A measured bake-off proving this state encoding or these choice keys beat alternatives. Long survival scores, planner text, and safety shields.
+
+Decorative animation, post-predict pacing delays, and absolute direction keys.
+
+Host ONNX session-load proofs (owned by prior work). Peak RAM or latency floors.
+
+## Verdict log
+
+| Round | Date | Verdict | Report |
+|---|---|---|---|
