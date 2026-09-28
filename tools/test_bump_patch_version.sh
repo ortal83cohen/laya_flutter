@@ -95,20 +95,19 @@ test_case() {
             ;;
             
         "valid-leading-blank")
-            # Test: a changelog whose title is preceded by a blank line keeps exactly one
-            # title line and one blank separator before the previously top-most section.
+            # Test: a changelog with a single title keeps one blank separator before its
+            # newly inserted release section and the previously top-most section.
             local output
             if output=$(sh "$HELPER_SCRIPT" "$temp_dir" 2>/dev/null) && [ "$output" = "2.4.10" ]; then
-                # The fixture's leading blank line is preserved, so the title sits on line 2
-                # and the new section starts on line 4.
+                # The fixture's title is the first line, so the new section starts on line 3.
                 local title_count separator
                 title_count=$(grep -c '^# Changelog$' "$temp_dir/CHANGELOG.md")
-                separator=$(sed -n '7p' "$temp_dir/CHANGELOG.md")
+                separator=$(sed -n '6p' "$temp_dir/CHANGELOG.md")
                 if [ "$title_count" = "1" ]; then
-                    if [ "$(sed -n '4p' "$temp_dir/CHANGELOG.md")" = "## 2.4.10 - 2026-01-02" ] \
-                       && [ "$(sed -n '6p' "$temp_dir/CHANGELOG.md")" = "- Automated patch release from main." ] \
+                    if [ "$(sed -n '3p' "$temp_dir/CHANGELOG.md")" = "## 2.4.10 - 2026-01-02" ] \
+                       && [ "$(sed -n '5p' "$temp_dir/CHANGELOG.md")" = "- Automated patch release from main." ] \
                        && [ -z "$separator" ] \
-                       && [ "$(sed -n '8p' "$temp_dir/CHANGELOG.md")" = "## 2.4.9 - 2026-08-01" ]; then
+                       && [ "$(sed -n '7p' "$temp_dir/CHANGELOG.md")" = "## 2.4.9 - 2026-08-01" ]; then
                         echo "PASS: $case_name"
                         return 0
                     else
