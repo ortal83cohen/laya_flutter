@@ -75,5 +75,11 @@ Do not ask the repository to explain itself in prose. Prefer running the code an
 
 ## Checks
 
-- Format: `dart format lib example/lib`
-- Analyze: `dart analyze --fatal-infos --fatal-warnings`
+Run the same suite as CI:
+
+```bash
+bash tools/check.sh
+```
+
+That script runs wiki lint, format, analysis, tests, an example web build, and the
+release-helper fixture tests.

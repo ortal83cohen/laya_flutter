@@ -1,0 +1,27 @@
+# Work item state. The only mutable file in a work item folder.
+# Copy this into wiki/work/NNNN-slug/STATE.yaml and keep it current.
+
+id: "0017-readme-decision-pitch"
+title: "README leads with the offline decision model"
+route: quick
+phase: implement
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers: []
+
+followups:
+  - summary: "check.sh is already red: host_session_load_test.dart needs dart format, and offline_predict_test.dart expects an older setup-error string."
+    severity: IMPORTANT
+    owner: "unassigned"
+
+decisions: []
+
+escalations: []
+
+goal_check: null
+compound: skipped
+compound_reason: "README prose only; no new learning that passes the compound test."

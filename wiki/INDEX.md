@@ -55,6 +55,7 @@ Every document in this wiki is reachable from here in one hop. If you add a docu
 | [offline-multilingual-onnx.md](product/offline-multilingual-onnx.md) | Proving host ONNX session load, touching macOS entitlements for the cache, or selecting a multilingual graph source. |
 | [classic-snake-example.md](product/classic-snake-example.md) | Changing Snake prompt keys, step gating, predict-failure behaviour, restart after death, the example autostart flag, or example tests that must not open a session. |
 | [snake-model-adaptation.md](product/snake-model-adaptation.md) | Evaluating the current Snake checkpoint, preparing a future fine-tune, or changing the Snake train/validation fixture and metrics. |
+| [release-pipeline.md](product/release-pipeline.md) | Enabling automated pub.dev releases, configuring `RELEASE_GITHUB_TOKEN`, or understanding what each push to `main` publishes. |
 
 ## Project records
 
