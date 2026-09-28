@@ -30,18 +30,25 @@ String resolveMultilingualOnnxPath() {
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('flutter_onnxruntime opens a session on the multilingual Laya graph', (tester) async {
-    final path = resolveMultilingualOnnxPath();
-    final file = File(path);
-    expect(await file.exists(), isTrue, reason: 'graph missing at $path');
-    expect(await file.length(), 1290466290, reason: 'unexpected graph byte size');
+  testWidgets(
+    'flutter_onnxruntime opens a session on the multilingual Laya graph',
+    (tester) async {
+      final path = resolveMultilingualOnnxPath();
+      final file = File(path);
+      expect(await file.exists(), isTrue, reason: 'graph missing at $path');
+      expect(
+        await file.length(),
+        1290466290,
+        reason: 'unexpected graph byte size',
+      );
 
-    final session = await OnnxRuntime().createSession(path);
-    try {
-      expect(session.inputNames, _expectedInputs);
-      expect(session.outputNames, _expectedOutputs);
-    } finally {
-      await session.close();
-    }
-  });
+      final session = await OnnxRuntime().createSession(path);
+      try {
+        expect(session.inputNames, _expectedInputs);
+        expect(session.outputNames, _expectedOutputs);
+      } finally {
+        await session.close();
+      }
+    },
+  );
 }
