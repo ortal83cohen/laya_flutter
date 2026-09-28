@@ -12,15 +12,19 @@ summary: The checklist that closes a phase and the checklist that closes a work 
 
 ## Per phase
 
-A phase is done when its gate in `workflow.md` passes and `STATE.yaml` records the new phase, round and verdict. Not before. A phase reported done with a failing check is the single most expensive lie available in this pipeline, because every later phase builds on it.
+A phase is done when its gate in `workflow.md` passes and `STATE.yaml` records the new phase, round
+and verdict. Not before. A phase reported done with a failing check is the single most expensive lie
+available in this pipeline, because every later phase builds on it.
 
 ## Per work item
 
-Tick every line. A line that cannot be ticked is either a task or an escalation, never a rounding error.
+Tick every line. A line that cannot be ticked is either a task or an escalation, never a rounding
+error.
 
 **Code**
 
-- [ ] On the full route, `04-product-contract.md` exists, and every acceptance criterion cites an `R-ID` from it.
+- [ ] On the full route, `04-product-contract.md` exists, and every acceptance criterion cites an
+  `R-ID` from it.
 - [ ] Every acceptance criterion has an explicit pass verdict with file-and-line evidence.
 - [ ] Every criterion has at least one negative test that fails when the behaviour is wrong.
 - [ ] The full check suite ran and its output is pasted into the implementation review.
@@ -38,16 +42,19 @@ Tick every line. A line that cannot be ticked is either a task or an escalation,
 
 - [ ] `wiki/product/` reflects the behaviour that now exists.
 - [ ] An ADR exists for every decision that was genuinely a choice between viable options.
-- [ ] `last_verified` refreshed on every wiki document whose content was re-checked — and only on those.
+- [ ] `last_verified` refreshed on every wiki document whose content was re-checked — and only on
+  those.
 - [ ] Every new wiki document has a line in `wiki/INDEX.md`.
 - [ ] `python3 tools/lint_wiki.py` exits clean.
 
 **Record**
 
-- [ ] On the full route, `STATE.yaml` records `compound: written` with a path, or `compound: skipped` with the condition that failed.
+- [ ] On the full route, `STATE.yaml` records `compound: written` with a path, or
+  `compound: skipped` with the condition that failed.
 - [ ] `STATE.yaml` phase is `done`.
 - [ ] Documentation is in the same commit as the code, not a follow-up.
 
 ## What "done" does not mean
 
-Done does not mean the agent believes the work is correct. It means the evidence is on disk and someone else can check it without asking the author anything.
+Done does not mean the agent believes the work is correct. It means the evidence is on disk and
+someone else can check it without asking the author anything.

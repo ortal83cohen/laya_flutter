@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-28"
 updated: "2026-09-28"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 1
@@ -36,7 +36,7 @@ decisions:
     action: accept
     reason: "The user directed documentation to close treating verification as accepted. The implementation-review agent was interrupted and did not write impl-review-01.md."
 
-escalations: []
+escalations: [ ]
 
 goal_check: null
 compound: skipped

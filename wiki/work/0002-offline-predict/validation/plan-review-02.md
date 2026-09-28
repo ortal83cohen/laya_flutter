@@ -1,7 +1,8 @@
 # Plan review — round 02
 
 - Work item: 0002-offline-predict
-- Reviewed artifact: `wiki/work/0002-offline-predict/01-plan.md` (with `02-criteria.md`, `04-product-contract.md`)
+- Reviewed artifact: `wiki/work/0002-offline-predict/01-plan.md` (with `02-criteria.md`,
+  `04-product-contract.md`)
 - Reviewer: plan-validator
 - Date: 2026-09-27
 
@@ -9,7 +10,9 @@
 
 **PASS**
 
-Every acceptance criterion is addressed by a named unit with input/action/outcome scenarios, criteria cite contract `R-ID`s, shared predict and fixture decisions are closed, and no blockers remain against the patched plan.
+Every acceptance criterion is addressed by a named unit with input/action/outcome scenarios,
+criteria cite contract `R-ID`s, shared predict and fixture decisions are closed, and no blockers
+remain against the patched plan.
 
 ## Verification performed
 
@@ -62,22 +65,24 @@ $ rg -n 'question map|Predict inputs|method named open|method named predict' wik
 01-plan.md:123: ... A method named open ... A method named predict ...
 ```
 
-`03-tasks.md` is absent; the plan does not mark work parallel. Parallelism safety was not applicable.
+`03-tasks.md` is absent; the plan does not mark work parallel. Parallelism safety was not
+applicable.
 
 ## Per-criterion results
 
-Plan-phase coverage map (not an implementation review). Result means whether a unit addresses the criterion without a coverage gap found in this round.
+Plan-phase coverage map (not an implementation review). Result means whether a unit addresses the
+criterion without a coverage gap found in this round.
 
-| Criterion | Result | Evidence (file:line) | Negative case in plan scenarios |
-|---|---|---|---|
-| AC-001 | pass | `01-plan.md:63` (U3 First download) | yes — `01-plan.md:65` |
-| AC-002 | pass | `01-plan.md:64` (U3 Second run offline) | yes — `01-plan.md:65` |
-| AC-003 | pass | `01-plan.md:87` (U5 Three answer types offline) | yes — `01-plan.md:88`, `01-plan.md:89` |
-| AC-004 | pass | `01-plan.md:93`, `01-plan.md:99` (U6 commits question map; host match on same state and questions) | yes — `01-plan.md:100` |
-| AC-005 | pass | `01-plan.md:41–53`, `01-plan.md:87` (U1/U2/U5) | yes — `01-plan.md:42`, `01-plan.md:53` |
-| AC-006 | pass | `01-plan.md:99`, `01-plan.md:101` (U6) | yes — `01-plan.md:101` |
-| AC-007 | pass | `01-plan.md:48`, `01-plan.md:52`, `01-plan.md:115` | yes — bundling rejected in U2 scenario |
-| AC-008 | pass | `01-plan.md:41–42` (U1) | yes — `01-plan.md:42` |
+| Criterion | Result | Evidence (file:line)                                                                               | Negative case in plan scenarios        |
+|-----------|--------|----------------------------------------------------------------------------------------------------|----------------------------------------|
+| AC-001    | pass   | `01-plan.md:63` (U3 First download)                                                                | yes — `01-plan.md:65`                  |
+| AC-002    | pass   | `01-plan.md:64` (U3 Second run offline)                                                            | yes — `01-plan.md:65`                  |
+| AC-003    | pass   | `01-plan.md:87` (U5 Three answer types offline)                                                    | yes — `01-plan.md:88`, `01-plan.md:89` |
+| AC-004    | pass   | `01-plan.md:93`, `01-plan.md:99` (U6 commits question map; host match on same state and questions) | yes — `01-plan.md:100`                 |
+| AC-005    | pass   | `01-plan.md:41–53`, `01-plan.md:87` (U1/U2/U5)                                                     | yes — `01-plan.md:42`, `01-plan.md:53` |
+| AC-006    | pass   | `01-plan.md:99`, `01-plan.md:101` (U6)                                                             | yes — `01-plan.md:101`                 |
+| AC-007    | pass   | `01-plan.md:48`, `01-plan.md:52`, `01-plan.md:115`                                                 | yes — bundling rejected in U2 scenario |
+| AC-008    | pass   | `01-plan.md:41–42` (U1)                                                                            | yes — `01-plan.md:42`                  |
 
 ## Findings
 
@@ -86,11 +91,14 @@ None.
 ## Recurrence check
 
 - Previous round: `wiki/work/0002-offline-predict/validation/plan-review-01.md`
-- Recurring findings: none — round 01 F-001 (fixtures omit questions), F-002 (predict question inputs undecided), and F-003 (public API names deferred) do not reappear against the patched `01-plan.md` (question map in U6 and Approach; Predict inputs at `01-plan.md:111`; `open` / `predict` naming at `01-plan.md:123`)
+- Recurring findings: none — round 01 F-001 (fixtures omit questions), F-002 (predict question
+  inputs undecided), and F-003 (public API names deferred) do not reappear against the patched
+  `01-plan.md` (question map in U6 and Approach; Predict inputs at `01-plan.md:111`; `open` /
+  `predict` naming at `01-plan.md:123`)
 - Oscillating: no
 
 ## Routing
 
 | Finding | Belongs to phase |
-|---|---|
-| (none) | — |
+|---------|------------------|
+| (none)  | —                |

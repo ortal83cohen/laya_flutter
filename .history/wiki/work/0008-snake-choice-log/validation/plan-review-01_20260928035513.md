@@ -1,7 +1,8 @@
 # Plan review — round 01
 
 - Work item: 0008-snake-choice-log
-- Reviewed artifact: `wiki/work/0008-snake-choice-log/01-plan.md` (with `02-criteria.md`, `04-product-contract.md`)
+- Reviewed artifact: `wiki/work/0008-snake-choice-log/01-plan.md` (with `02-criteria.md`,
+  `04-product-contract.md`)
 - Reviewer: plan-validator
 - Date: 2026-09-28
 
@@ -9,7 +10,10 @@
 
 **PASS**
 
-Every acceptance criterion maps to a unit that realises its cited requirement, the plan stays inside the product contract, shared callback and record-shape decisions are closed in prose, and codebase assumptions about the predict inject seam, pre-step English state, silent failure paths, and absence of print/debugPrint hold.
+Every acceptance criterion maps to a unit that realises its cited requirement, the plan stays inside
+the product contract, shared callback and record-shape decisions are closed in prose, and codebase
+assumptions about the predict inject seam, pre-step English state, silent failure paths, and absence
+of print/debugPrint hold.
 
 ## Verification performed
 
@@ -128,14 +132,16 @@ $ sed -n '55,112p' lib/src/answers.dart
 # LayaAnswer.choice exposes choice, probabilities (Map<String, double>), and confidence
 ```
 
-`03-tasks.md` is absent; the plan does not mark work parallel. Parallelism safety was not applicable.
+`03-tasks.md` is absent; the plan does not mark work parallel. Parallelism safety was not
+applicable.
 
 ## Per-criterion results
 
-Plan-phase coverage map (not an implementation review). Result means whether a unit addresses the criterion without a coverage gap found in this round.
+Plan-phase coverage map (not an implementation review). Result means whether a unit addresses the
+criterion without a coverage gap found in this round.
 
 | Criterion | Result | Evidence (file:line)                                                      | Negative case in plan scenarios                                         |
-| --------- | ------ | ------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+|-----------|--------|---------------------------------------------------------------------------|-------------------------------------------------------------------------|
 | AC-001    | pass   | `01-plan.md:29–40` (U1); also `01-plan.md:76` (U4)                        | yes — `01-plan.md:40`, `01-plan.md:80`                                  |
 | AC-002    | pass   | `01-plan.md:31`, `01-plan.md:37` (U1)                                     | yes — U2 failure paths leave cells unchanged (`01-plan.md:50–52`)       |
 | AC-003    | pass   | `01-plan.md:42–53` (U2); also `01-plan.md:77` (U4)                        | yes — `01-plan.md:50`, `01-plan.md:53`                                  |
@@ -158,5 +164,5 @@ None.
 ## Routing
 
 | Finding | Belongs to phase |
-| ------- | ---------------- |
+|---------|------------------|
 | (none)  | —                |

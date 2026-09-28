@@ -252,9 +252,8 @@ void main() {
 
   test('real example uses the centralized local Snake bundle setting', () {
     final String source = File('example/lib/main.dart').readAsStringSync();
-    final String settings = File(
-      'example/lib/app_settings.dart',
-    ).readAsStringSync();
+    final String settings = File('example/lib/app_settings.dart')
+        .readAsStringSync();
     expect(settings, contains('static const String snakeCheckpointDir'));
     expect(source, contains('AppSettings.snakeCheckpointDir'));
     expect(source, contains('LayaFlutter.openLocalBundle('));

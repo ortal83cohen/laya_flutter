@@ -9,11 +9,14 @@
 
 **FAIL**
 
-A cited source (the NandhaKishorM/laya `main` recursive git tree) contradicts the artifact’s claim that official Laya ships no in-tree ONNX exporter, so a constraint planners will treat as fact is unsupported.
+A cited source (the NandhaKishorM/laya `main` recursive git tree) contradicts the artifact’s claim
+that official Laya ships no in-tree ONNX exporter, so a constraint planners will treat as fact is
+unsupported.
 
 ## Verification performed
 
-Checked the research question against `00-research.md`, then opened cited Hub APIs, ORT/pub.dev pages, GOAL, and the upstream git tree the artifact names as evidence for the exporter claim.
+Checked the research question against `00-research.md`, then opened cited Hub APIs, ORT/pub.dev
+pages, GOAL, and the upstream git tree the artifact names as evidence for the exporter claim.
 
 ```text
 $ curl -sL "https://api.github.com/repos/NandhaKishorM/laya/git/trees/main?recursive=1" \
@@ -43,7 +46,9 @@ $ curl -sL "https://raw.githubusercontent.com/NandhaKishorM/laya/main/scripts/ex
 71:        output_names=output_names
 ```
 
-Official `scripts/export_onnx.py` exports the same five inputs and `logits` / `act_logits` outputs that `ONNXAgent._infer` consumes (verified against `https://raw.githubusercontent.com/NandhaKishorM/laya/main/laya/onnx_agent.py`).
+Official `scripts/export_onnx.py` exports the same five inputs and `logits` / `act_logits` outputs
+that `ONNXAgent._infer` consumes (verified against
+`https://raw.githubusercontent.com/NandhaKishorM/laya/main/laya/onnx_agent.py`).
 
 Spot-checks that did support the artifact (not findings):
 
@@ -63,9 +68,9 @@ typed-decisions README benchmark: 0.766 vs 0.362 / 0.342
 
 Research review — acceptance-criteria table not applicable.
 
-| Criterion | Result | Evidence (file:line) | Negative case exercised |
-|---|---|---|---|
-| n/a | n/a | research artifact review, not impl | n/a |
+| Criterion | Result | Evidence (file:line)               | Negative case exercised |
+|-----------|--------|------------------------------------|-------------------------|
+| n/a       | n/a    | research artifact review, not impl | n/a                     |
 
 ## Findings
 
@@ -74,8 +79,19 @@ Research review — acceptance-criteria table not applicable.
 - Severity: BLOCKER
 - Location: `wiki/work/0002-offline-predict/00-research.md:61`
 - Criterion affected: none
-- Observation: The finding claims the NandhaKishorM/laya `main` tree includes `laya/onnx_agent.py` and “no `export_onnx.py` among listed paths,” and that “the runnable export that matches `ONNXAgent`’s I/O lives in community `mariojcr/laya-onnx`.” The same recursive tree URL the streams cite lists `scripts/export_onnx.py`, `laya-ts/scripts/export_onnx.py`, and `tests/test_export_onnx_safety.py`. The official `scripts/export_onnx.py` calls `torch.onnx.export` on `agent.model` with input names `input_ids`, `attention_mask`, `marker_pos`, `marker_mask`, `qtype` and outputs `logits`, `act_logits` — the `ONNXAgent` contract. The repeated constraint at `00-research.md:143` (“Official Laya does not currently ship `export_onnx.py` in-tree”) restates the same unsupported claim. Community dynamo exports remain real; they are not the only matching exporter.
-- Why it matters: A plan built on this research will treat first-party export as absent and force a community-only or reinvented export path, which is a false delivery constraint on the chosen ONNX runtime path.
+- Observation: The finding claims the NandhaKishorM/laya `main` tree includes `laya/onnx_agent.py`
+  and “no `export_onnx.py` among listed paths,” and that “the runnable export that matches
+  `ONNXAgent`’s I/O lives in community `mariojcr/laya-onnx`.” The same recursive tree URL the
+  streams cite lists `scripts/export_onnx.py`, `laya-ts/scripts/export_onnx.py`, and
+  `tests/test_export_onnx_safety.py`. The official `scripts/export_onnx.py` calls
+  `torch.onnx.export` on `agent.model` with input names `input_ids`, `attention_mask`, `marker_pos`,
+  `marker_mask`, `qtype` and outputs `logits`, `act_logits` — the `ONNXAgent` contract. The repeated
+  constraint at `00-research.md:143` (“Official Laya does not currently ship `export_onnx.py`
+  in-tree”) restates the same unsupported claim. Community dynamo exports remain real; they are not
+  the only matching exporter.
+- Why it matters: A plan built on this research will treat first-party export as absent and force a
+  community-only or reinvented export path, which is a false delivery constraint on the chosen ONNX
+  runtime path.
 
 ## Recurrence check
 
@@ -86,5 +102,5 @@ Research review — acceptance-criteria table not applicable.
 ## Routing
 
 | Finding | Belongs to phase |
-|---|---|
-| F-001 | research |
+|---------|------------------|
+| F-001   | research         |

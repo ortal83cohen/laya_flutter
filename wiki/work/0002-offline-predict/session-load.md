@@ -2,7 +2,8 @@
 
 ## Verdict
 
-**PASS.** `flutter_onnxruntime` opened a host session on the multilingual Laya graph via macOS `integration_test`.
+**PASS.** `flutter_onnxruntime` opened a host session on the multilingual Laya graph via macOS
+`integration_test`.
 
 ## Graph
 
@@ -18,7 +19,8 @@
 
 ## Attempt that passed
 
-Sandbox was left enabled. `macos/Runner/DebugProfile.entitlements` gained a temporary absolute-path read-only exception for `/Users/ortalcohen/.cache/laya_flutter/` (Release entitlements unchanged).
+Sandbox was left enabled. `macos/Runner/DebugProfile.entitlements` gained a temporary absolute-path
+read-only exception for `/Users/ortalcohen/.cache/laya_flutter/` (Release entitlements unchanged).
 
 ```bash
 export LAYA_ONNX_PATH="$HOME/.cache/laya_flutter/onnx/multilingual/laya-multilingual.onnx"
@@ -40,6 +42,7 @@ Failed to foreground app; open returned 1
 ## Prior attempts (superseded)
 
 1. VM `flutter test`: `MissingPluginException` (plugin not registered).
-2. macOS integration without cache entitlement: `SESSION_CREATION_FAILED` / system error number 1 (EPERM under app sandbox).
+2. macOS integration without cache entitlement: `SESSION_CREATION_FAILED` / system error number 1 (
+   EPERM under app sandbox).
 
 Recorded: 2026-09-27

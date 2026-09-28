@@ -1,7 +1,8 @@
 # Plan review — round 02
 
 - Work item: 0010-restart-on-death
-- Reviewed artifact: `wiki/work/0010-restart-on-death/01-plan.md` (with `02-criteria.md`, `04-product-contract.md`)
+- Reviewed artifact: `wiki/work/0010-restart-on-death/01-plan.md` (with `02-criteria.md`,
+  `04-product-contract.md`)
 - Reviewer: plan-validator
 - Date: 2026-09-28
 
@@ -9,7 +10,8 @@
 
 **PASS**
 
-Round-01 blockers and importants are closed in the plan text, criterion-to-unit coverage and contract boundary hold, and no new blockers appear against the codebase.
+Round-01 blockers and importants are closed in the plan text, criterion-to-unit coverage and
+contract boundary hold, and no new blockers appear against the codebase.
 
 ## Verification performed
 
@@ -40,7 +42,8 @@ $ rg -n 'twelve|60|one hundred|late final|predict override|assignable' wiki/work
 84:... Screen predict seam: an optional predict override. ...
 ```
 
-Codebase claims used by the plan (screen construction, loop gate, collision end, titles, session-free runtime):
+Codebase claims used by the plan (screen construction, loop gate, collision end, titles,
+session-free runtime):
 
 ```text
 $ sed -n '15,46p' example/lib/snake_screen.dart
@@ -128,14 +131,16 @@ AC-001 traces ['R-001'] missing none empty False
 AC-011 traces ['R-001', 'R-003', 'R-004'] missing none empty False
 ```
 
-`03-tasks.md` is absent; the plan does not mark work parallel. Parallelism safety was not applicable.
+`03-tasks.md` is absent; the plan does not mark work parallel. Parallelism safety was not
+applicable.
 
 ## Per-criterion results
 
-Plan-phase coverage map (not an implementation review). Result means whether a unit addresses the criterion without a coverage gap found in this round.
+Plan-phase coverage map (not an implementation review). Result means whether a unit addresses the
+criterion without a coverage gap found in this round.
 
 | Criterion | Result | Evidence (file:line)                                             | Negative case in plan scenarios        |
-| --------- | ------ | ---------------------------------------------------------------- | -------------------------------------- |
+|-----------|--------|------------------------------------------------------------------|----------------------------------------|
 | AC-001    | pass   | `01-plan.md:35` (U1 wall)                                        | yes — `01-plan.md:35`                  |
 | AC-002    | pass   | `01-plan.md:36` (U1 body)                                        | yes — `01-plan.md:36`                  |
 | AC-003    | pass   | `01-plan.md:37` (U1 further step)                                | yes — `01-plan.md:37`                  |
@@ -154,18 +159,22 @@ None.
 
 Round-01 closure check (not new findings):
 
-- Former F-001 (board size twelve): closed at `01-plan.md:83` ("one hundred twenty"); matches `example/lib/snake_screen.dart:33-34`.
-- Former F-002 (`late final` unstated): closed at `01-plan.md:82` (field must become assignable); matches `example/lib/snake_screen.dart:25`.
-- Former F-003 (harness seam undecided): closed at `01-plan.md:15` and `01-plan.md:84` (optional predict override; production omits it).
+- Former F-001 (board size twelve): closed at `01-plan.md:83` ("one hundred twenty"); matches
+  `example/lib/snake_screen.dart:33-34`.
+- Former F-002 (`late final` unstated): closed at `01-plan.md:82` (field must become assignable);
+  matches `example/lib/snake_screen.dart:25`.
+- Former F-003 (harness seam undecided): closed at `01-plan.md:15` and `01-plan.md:84` (optional
+  predict override; production omits it).
 
 ## Recurrence check
 
 - Previous round: `wiki/work/0010-restart-on-death/validation/plan-review-01.md`
-- Recurring findings: none — F-001, F-002, and F-003 from round 01 are addressed in the current plan and do not recur as open defects
+- Recurring findings: none — F-001, F-002, and F-003 from round 01 are addressed in the current plan
+  and do not recur as open defects
 - Oscillating: no
 
 ## Routing
 
 | Finding | Belongs to phase |
-| ------- | ---------------- |
+|---------|------------------|
 | (none)  | —                |

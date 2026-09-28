@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-27"
 updated: "2026-09-27"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 0
@@ -40,7 +40,7 @@ decisions:
     action: annotate-only
     reason: "impl-review-01 PASS for AC-001 through AC-008. Document phase recorded product constraints, ADR 0002, and the macOS session-sandbox solution."
 
-escalations: []
+escalations: [ ]
 
 goal_check: SC-002
 compound: written

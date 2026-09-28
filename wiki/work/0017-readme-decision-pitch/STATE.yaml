@@ -11,16 +11,16 @@ owner_agent: null
 created: "2026-09-28"
 updated: "2026-09-28"
 
-blockers: []
+blockers: [ ]
 
 followups:
   - summary: "check.sh is already red: host_session_load_test.dart needs dart format, and offline_predict_test.dart expects an older setup-error string."
     severity: IMPORTANT
     owner: "unassigned"
 
-decisions: []
+decisions: [ ]
 
-escalations: []
+escalations: [ ]
 
 goal_check: null
 compound: skipped

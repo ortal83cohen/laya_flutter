@@ -54,10 +54,10 @@ external fine-tuning path without claiming an unrun experiment.
 Files it may touch: `wiki/work/0015-snake-model-adaptation/00-research.md`,
 `wiki/product/snake-model-adaptation.md`, `wiki/INDEX.md`.
 
-| Scenario | Category | Input | Action | Expected outcome | Covers |
-|---|---|---|---|---|---|
-| Current provenance | happy path | Source constants and cache loader | Read the documented path | Base id and graph source are stated separately | R-001 |
-| Training availability | edge | Repository and upstream source inventory | Inspect for training support | No local training is claimed; upstream notebook is named as external support | R-002 |
+| Scenario              | Category   | Input                                    | Action                       | Expected outcome                                                             | Covers |
+|-----------------------|------------|------------------------------------------|------------------------------|------------------------------------------------------------------------------|--------|
+| Current provenance    | happy path | Source constants and cache loader        | Read the documented path     | Base id and graph source are stated separately                               | R-001  |
+| Training availability | edge       | Repository and upstream source inventory | Inspect for training support | No local training is claimed; upstream notebook is named as external support | R-002  |
 
 ### U2. Create a weight-free evaluation fixture and scorer
 
@@ -69,12 +69,12 @@ Files it may touch: `tool/snake_eval.py`,
 `tool/snake_eval_fixture.jsonl`,
 `wiki/work/0015-snake-model-adaptation/evidence/baseline-straight.json`.
 
-| Scenario | Category | Input | Action | Expected outcome | Covers |
-|---|---|---|---|---|---|
-| Fixture validation | happy path | JSONL with 8 train and 4 validation rows | Run the evaluator | Split and labels validate | R-003 |
-| Baseline score | integration | Valid fixture | Run straight-policy scoring | Metrics are printed and match the checked-in evidence | R-004 |
-| Prediction comparison | integration | Complete prediction export for validation ids | Run scorer by model | Base and fine-tuned rows receive the same metric schema | R-005 |
-| Invalid fixture | error | Duplicate id or overlapping split id | Run evaluator | Non-zero error identifies the invalid row | R-003 |
+| Scenario              | Category    | Input                                         | Action                      | Expected outcome                                        | Covers |
+|-----------------------|-------------|-----------------------------------------------|-----------------------------|---------------------------------------------------------|--------|
+| Fixture validation    | happy path  | JSONL with 8 train and 4 validation rows      | Run the evaluator           | Split and labels validate                               | R-003  |
+| Baseline score        | integration | Valid fixture                                 | Run straight-policy scoring | Metrics are printed and match the checked-in evidence   | R-004  |
+| Prediction comparison | integration | Complete prediction export for validation ids | Run scorer by model         | Base and fine-tuned rows receive the same metric schema | R-005  |
+| Invalid fixture       | error       | Duplicate id or overlapping split id          | Run evaluator               | Non-zero error identifies the invalid row               | R-003  |
 
 ### U3. Define the adaptation experiment and gates
 
@@ -85,10 +85,10 @@ separates local evidence from unrun training.
 Files it may touch: `wiki/product/snake-model-adaptation.md`,
 `wiki/INDEX.md`.
 
-| Scenario | Category | Input | Action | Expected outcome | Covers |
-|---|---|---|---|---|---|
-| Experiment protocol | happy path | Future train and validation exports | Read the product note | Provenance, metrics and threshold gates are defined | R-006 |
-| No-training boundary | edge | Current checkout | Read evidence status | No adapted checkpoint or training result is presented as complete | R-002, R-006 |
+| Scenario             | Category   | Input                               | Action                | Expected outcome                                                  | Covers       |
+|----------------------|------------|-------------------------------------|-----------------------|-------------------------------------------------------------------|--------------|
+| Experiment protocol  | happy path | Future train and validation exports | Read the product note | Provenance, metrics and threshold gates are defined               | R-006        |
+| No-training boundary | edge       | Current checkout                    | Read evidence status  | No adapted checkpoint or training result is presented as complete | R-002, R-006 |
 
 ## Interfaces and shared decisions
 
@@ -105,12 +105,12 @@ Files it may touch: `wiki/product/snake-model-adaptation.md`,
 
 ## Risks
 
-| Risk | Likelihood | Impact | Mitigation | Trigger that means it happened |
-|---|---|---|---|---|
-| Tiny pilot is mistaken for product evidence | Medium | High | Label the fixture as plumbing-only and require a larger held-out trajectory set | A report presents 4-row baseline as checkpoint quality |
-| Teacher labels encode a hidden safety shield | Low | Medium | Keep teacher labels in offline evaluation and document the geometric rule | Runtime code imports the evaluator or changes model-owned moves |
-| Train/validation leakage | Low | High | Enforce unique ids and both split values in the evaluator | Duplicate or missing split row is accepted |
-| Training result cannot be reproduced | Medium | High | Require base revision, dataset hash, seed and calibration split in future run manifest | A fine-tuned report omits provenance |
+| Risk                                         | Likelihood | Impact | Mitigation                                                                             | Trigger that means it happened                                  |
+|----------------------------------------------|------------|--------|----------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| Tiny pilot is mistaken for product evidence  | Medium     | High   | Label the fixture as plumbing-only and require a larger held-out trajectory set        | A report presents 4-row baseline as checkpoint quality          |
+| Teacher labels encode a hidden safety shield | Low        | Medium | Keep teacher labels in offline evaluation and document the geometric rule              | Runtime code imports the evaluator or changes model-owned moves |
+| Train/validation leakage                     | Low        | High   | Enforce unique ids and both split values in the evaluator                              | Duplicate or missing split row is accepted                      |
+| Training result cannot be reproduced         | Medium     | High   | Require base revision, dataset hash, seed and calibration split in future run manifest | A fine-tuned report omits provenance                            |
 
 ## Rollback
 

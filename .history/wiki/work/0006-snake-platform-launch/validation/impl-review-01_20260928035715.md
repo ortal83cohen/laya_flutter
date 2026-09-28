@@ -1,7 +1,12 @@
 # Implementation review — round 01
 
 - Work item: 0006-snake-platform-launch
-- Reviewed artifact: working tree (no git revision; repository has no commits). Paths under review: `example/lib/main.dart`, `example/pubspec.yaml`, `example/third_party/hf_tokenizers/lib/hf_tokenizers.dart`, `example/third_party/hf_tokenizers/pubspec.yaml`, `pubspec.yaml`, `test/tokenizer_id_parity_test.dart`, `example/ios/Runner.xcodeproj/project.pbxproj`, `wiki/work/0006-snake-platform-launch/evidence/`
+- Reviewed artifact: working tree (no git revision; repository has no commits). Paths under review:
+  `example/lib/main.dart`, `example/pubspec.yaml`,
+  `example/third_party/hf_tokenizers/lib/hf_tokenizers.dart`,
+  `example/third_party/hf_tokenizers/pubspec.yaml`, `pubspec.yaml`,
+  `test/tokenizer_id_parity_test.dart`, `example/ios/Runner.xcodeproj/project.pbxproj`,
+  `wiki/work/0006-snake-platform-launch/evidence/`
 - Reviewer: impl-validator
 - Date: 2026-09-28
 
@@ -9,7 +14,9 @@
 
 **PASS**
 
-All ten frozen acceptance criteria are met with re-run checks, on-device cache inspection, and screenshot inspection; the only red example test asserts an 80×80 board outside this slice and is recorded as pre-existing, not as an AC failure.
+All ten frozen acceptance criteria are met with re-run checks, on-device cache inspection, and
+screenshot inspection; the only red example test asserts an 80×80 board outside this slice and is
+recorded as pre-existing, not as an AC failure.
 
 ## Verification performed
 
@@ -39,7 +46,9 @@ $ cd example && flutter test test/snake_screen_test.dart
   test/snake_screen_test.dart 26:5
 ```
 
-`example/lib/snake_screen.dart` constructs the board at `width: 12` / `height: 12` (lines 33–34), which matches AC-001/AC-002. The failing test expects `width: 80` / `height: 80` and is outside the listed 0006 paths.
+`example/lib/snake_screen.dart` constructs the board at `width: 12` / `height: 12` (lines 33–34),
+which matches AC-001/AC-002. The failing test expects `width: 80` / `height: 80` and is outside the
+listed 0006 paths.
 
 ### Screenshot grid estimate (pixel math from green 3-cell snake)
 
@@ -48,7 +57,8 @@ wiki/work/0006-snake-platform-launch/evidence/android-emulator-5554.png: board=9
 wiki/work/0006-snake-platform-launch/evidence/ios-iphone-17-pro.png: board=1110x1110 cell~91.7x90 => 12.11x12.33
 ```
 
-Both images show AppBar title `Snake — ended` (visual inspection of the PNG files) and a board, not the idle Laya home.
+Both images show AppBar title `Snake — ended` (visual inspection of the PNG files) and a board, not
+the idle Laya home.
 
 ### Device caches (AC-010 / open path)
 
@@ -90,7 +100,8 @@ matched_flags_equal=true
 AC006_NEG_OK
 ```
 
-Package parity test covers both frozen fixture state strings (`en_short`, `he_short`) with `addSpecialTokens: false` at package root (not under the example override).
+Package parity test covers both frozen fixture state strings (`en_short`, `he_short`) with
+`addSpecialTokens: false` at package root (not under the example override).
 
 ### Packaging / iOS floor
 
@@ -112,7 +123,7 @@ No example `Podfile`. Library pin remains `hf_tokenizers: ^1.2.2` in root `pubsp
 ## Per-criterion results
 
 | Criterion | Result | Evidence (file:line)                                                                                                                                                                                | Negative case exercised                                                                             |
-| --------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+|-----------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
 | AC-001    | pass   | `wiki/work/0006-snake-platform-launch/evidence/android-emulator-5554.png` (title `Snake — ended`; board ≈12×12 by green-cell math); Android cache under `files/laya_flutter` complete               | yes — idle-home / log-only evidence rejected; capture is Snake route with board                     |
 | AC-002    | pass   | `wiki/work/0006-snake-platform-launch/evidence/ios-iphone-17-pro.png` (title `Snake — ended`; board ≈12×12); iOS Application Support `laya_flutter` complete                                        | yes — same negative class; capture is Snake route with board                                        |
 | AC-003    | pass   | `example/lib/main.dart:42-47` (`getApplicationSupportDirectory` + `laya_flutter` on Android/iOS); device paths match                                                                                | yes — host-only `$HOME/.cache/laya_flutter` is not what mobile open uses                            |
@@ -129,10 +140,16 @@ No example `Podfile`. Library pin remains `hf_tokenizers: ^1.2.2` in root `pubsp
 ### F-001 — Example suite asserts 80×80 board while screen is 12×12
 
 - Severity: PRE_EXISTING
-- Location: `example/test/snake_screen_test.dart:24-28` (assertion); `example/lib/snake_screen.dart:33-34` (actual `width`/`height` 12)
-- Criterion affected: none (AC-001/AC-002 require twelve-by-twelve; screen and screenshots match that)
-- Observation: `flutter test` in `example/` fails on `example Snake board is 80 by 80`. Neither path is in the 0006 reviewed file list. The assertion does not match the frozen visual board size for this slice.
-- Why it matters: the example package suite is red on this tree, but the failure is outside 0006’s criteria and must not be “fixed” by changing the board away from twelve-by-twelve to satisfy an 80×80 test.
+- Location: `example/test/snake_screen_test.dart:24-28` (assertion);
+  `example/lib/snake_screen.dart:33-34` (actual `width`/`height` 12)
+- Criterion affected: none (AC-001/AC-002 require twelve-by-twelve; screen and screenshots match
+  that)
+- Observation: `flutter test` in `example/` fails on `example Snake board is 80 by 80`. Neither path
+  is in the 0006 reviewed file list. The assertion does not match the frozen visual board size for
+  this slice.
+- Why it matters: the example package suite is red on this tree, but the failure is outside 0006’s
+  criteria and must not be “fixed” by changing the board away from twelve-by-twelve to satisfy an
+  80×80 test.
 
 ## Recurrence check
 
@@ -143,5 +160,5 @@ No example `Podfile`. Library pin remains `hf_tokenizers: ^1.2.2` in root `pubsp
 ## Routing
 
 | Finding | Belongs to phase                                                                              |
-| ------- | --------------------------------------------------------------------------------------------- |
+|---------|-----------------------------------------------------------------------------------------------|
 | F-001   | none for 0006 (PRE_EXISTING / out of slice; do not patch 0006 to satisfy an 80×80 board test) |

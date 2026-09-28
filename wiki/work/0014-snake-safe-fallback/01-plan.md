@@ -29,7 +29,8 @@ stationary and are not replaced.
 
 Update controller and screen tests with injected predict doubles covering exact
 prompt/context fields, legal model ownership, dangerous-but-executed choices,
-invalid/no-answer handling, repeated-turn detection, full records, and logging. Update the Snake product
+invalid/no-answer handling, repeated-turn detection, full records, and logging. Update the Snake
+product
 note to make model ownership absolute and diagnostics non-intervening; no safety
 fallback ADR is added.
 
@@ -60,13 +61,13 @@ replacement.
 Files it may touch: `example/lib/snake_controller.dart`,
 `example/test/snake_controller_test.dart`.
 
-| Scenario | Category | Input | Action | Expected outcome | Covers |
-|---|---|---|---|---|---|
-| Structured relative output contract | happy path | A living board with food and recent keys | Build question and state | Id/key order, exact-key instruction, distance, food side, recent keys and per-key candidate facts are present | R-001, R-002 |
-| Legal model move owns direction | happy path | Predict returns a legal key while another is closer to food | Run one step | The returned key is applied, not replaced by a heuristic | R-003 |
-| Dangerous model move is observed | edge | Predict returns a key whose next cell is a wall or body | Run one step | The returned key is executed under classic collision rules and the record classifies the result | R-003, R-005 |
-| Invalid output | error | Predict returns `up` or omits `turn` | Run one step | The result is recorded and the board remains unchanged; no direction is invented | R-004 |
-| Predict failure | error | Predict throws | Run one step | Failure is recorded and the board remains unchanged | R-004 |
+| Scenario                            | Category   | Input                                                       | Action                   | Expected outcome                                                                                              | Covers       |
+|-------------------------------------|------------|-------------------------------------------------------------|--------------------------|---------------------------------------------------------------------------------------------------------------|--------------|
+| Structured relative output contract | happy path | A living board with food and recent keys                    | Build question and state | Id/key order, exact-key instruction, distance, food side, recent keys and per-key candidate facts are present | R-001, R-002 |
+| Legal model move owns direction     | happy path | Predict returns a legal key while another is closer to food | Run one step             | The returned key is applied, not replaced by a heuristic                                                      | R-003        |
+| Dangerous model move is observed    | edge       | Predict returns a key whose next cell is a wall or body     | Run one step             | The returned key is executed under classic collision rules and the record classifies the result               | R-003, R-005 |
+| Invalid output                      | error      | Predict returns `up` or omits `turn`                        | Run one step             | The result is recorded and the board remains unchanged; no direction is invented                              | R-004        |
+| Predict failure                     | error      | Predict throws                                              | Run one step             | Failure is recorded and the board remains unchanged                                                           | R-004        |
 
 ### U2. Emit and consume structured step diagnostics
 
@@ -78,13 +79,13 @@ Files it may touch: `example/lib/snake_controller.dart`,
 `example/lib/snake_screen.dart`, `example/test/snake_controller_test.dart`,
 `example/test/snake_screen_test.dart`.
 
-| Scenario | Category | Input | Action | Expected outcome | Covers |
-|---|---|---|---|---|---|
-| Structured accepted record | integration | Predict returns a legal key | Complete one step with a record callback | Record contains pre-step board facts, objective, progress before/after/delta, model key, attempted cell and answer metadata | R-005 |
-| Structured collision record | integration | Predict returns a wall/body-bound key | Complete one step with a record callback | Record names the attempted cell and collision status, with no substitute key | R-005 |
-| Repeated-turn regression | integration | Predict returns a repeated or alternating relative-key sequence | Capture the state before the later prediction and inspect records | Recent keys and progress facts are present; a repeated-pattern flag is reported without changing the model choice | R-002, R-005 |
-| Await-gated continuation | integration | Predict returns legal keys twice | Run the screen loop with predict override | At least two awaited predictions occur; no timer or concurrent loop is introduced | R-006 |
-| Session-free proof | edge | All controller/screen scenarios | Run VM tests | Tests use injected predict only and do not open native inference | R-007 |
+| Scenario                    | Category    | Input                                                           | Action                                                            | Expected outcome                                                                                                            | Covers       |
+|-----------------------------|-------------|-----------------------------------------------------------------|-------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|--------------|
+| Structured accepted record  | integration | Predict returns a legal key                                     | Complete one step with a record callback                          | Record contains pre-step board facts, objective, progress before/after/delta, model key, attempted cell and answer metadata | R-005        |
+| Structured collision record | integration | Predict returns a wall/body-bound key                           | Complete one step with a record callback                          | Record names the attempted cell and collision status, with no substitute key                                                | R-005        |
+| Repeated-turn regression    | integration | Predict returns a repeated or alternating relative-key sequence | Capture the state before the later prediction and inspect records | Recent keys and progress facts are present; a repeated-pattern flag is reported without changing the model choice           | R-002, R-005 |
+| Await-gated continuation    | integration | Predict returns legal keys twice                                | Run the screen loop with predict override                         | At least two awaited predictions occur; no timer or concurrent loop is introduced                                           | R-006        |
+| Session-free proof          | edge        | All controller/screen scenarios                                 | Run VM tests                                                      | Tests use injected predict only and do not open native inference                                                            | R-007        |
 
 ## Interfaces and shared decisions
 
@@ -104,13 +105,13 @@ Files it may touch: `example/lib/snake_controller.dart`,
 
 ## Risks
 
-| Risk | Likelihood | Impact | Mitigation | Trigger that means it happened |
-|---|---|---|---|---|
-| Context becomes too verbose or ambiguous | Medium | Medium model-quality regression | Keep facts compact, candidate keyed and test exact required fields | Prompt test cannot find one candidate's next cell/kind/distance |
-| A heuristic replacement sneaks into collision handling | Low | Critical contract violation | Add negative test with a wall-bound model key and assert no alternate key is applied | Record shows any applied key different from valid model key |
-| Existing log consumers lose the model key | Medium | Medium diagnostics regression | Keep `choice` and include it in structured output | Existing choice-log assertion cannot find model key |
-| Invalid output causes a tight loop | Medium | High CPU/log flood | Preserve screen stop-on-unchanged behavior and test a failure path | Screen issues a second step after no movement/no end |
-| Repetition flag becomes an intervention | Low | Critical contract violation | Test repeated keys only affect diagnostics and the next state context | Applied key differs from the model key after a warning |
+| Risk                                                   | Likelihood | Impact                          | Mitigation                                                                           | Trigger that means it happened                                  |
+|--------------------------------------------------------|------------|---------------------------------|--------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| Context becomes too verbose or ambiguous               | Medium     | Medium model-quality regression | Keep facts compact, candidate keyed and test exact required fields                   | Prompt test cannot find one candidate's next cell/kind/distance |
+| A heuristic replacement sneaks into collision handling | Low        | Critical contract violation     | Add negative test with a wall-bound model key and assert no alternate key is applied | Record shows any applied key different from valid model key     |
+| Existing log consumers lose the model key              | Medium     | Medium diagnostics regression   | Keep `choice` and include it in structured output                                    | Existing choice-log assertion cannot find model key             |
+| Invalid output causes a tight loop                     | Medium     | High CPU/log flood              | Preserve screen stop-on-unchanged behavior and test a failure path                   | Screen issues a second step after no movement/no end            |
+| Repetition flag becomes an intervention                | Low        | Critical contract violation     | Test repeated keys only affect diagnostics and the next state context                | Applied key differs from the model key after a warning          |
 
 ## Rollback
 

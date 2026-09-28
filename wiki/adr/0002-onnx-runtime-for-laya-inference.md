@@ -16,7 +16,8 @@ summary: Offline Laya inference runs on ONNX Runtime, not LiteRT or ExecuTorch, 
 
 ## Context and problem statement
 
-Which single on-device inference engine should execute Laya's encoder-plus-decision-head in Flutter so choice, score, and noul answers can match Python Laya, while still covering Android and iOS?
+Which single on-device inference engine should execute Laya's encoder-plus-decision-head in Flutter
+so choice, score, and noul answers can match Python Laya, while still covering Android and iOS?
 
 ## Decision drivers
 
@@ -29,11 +30,13 @@ Which single on-device inference engine should execute Laya's encoder-plus-decis
 
 ### ONNX Runtime via a community Flutter wrapper
 
-Export or adopt an ONNX graph that matches the ONNX agent contract; run it with ONNX Runtime; decode answers in Dart the same way `ONNXAgent` does after logits.
+Export or adopt an ONNX graph that matches the ONNX agent contract; run it with ONNX Runtime; decode
+answers in Dart the same way `ONNXAgent` does after logits.
 
 ### LiteRT / TFLite
 
-Convert the PyTorch `DecisionModel` with a LiteRT converter and run through a Flutter LiteRT binding.
+Convert the PyTorch `DecisionModel` with a LiteRT converter and run through a Flutter LiteRT
+binding.
 
 ### ExecuTorch
 
@@ -43,12 +46,18 @@ Export to `.pte` and run through a Flutter ExecuTorch binding.
 
 Chosen option: ONNX Runtime via `flutter_onnxruntime`.
 
-It is the only compared option with an upstream consumer, published ModernBERT/mmBERT-plus-head exports, measured logit parity, and official coverage of Android, iOS, desktop, and web. LiteRT and ExecuTorch can cover those platforms in principle, but neither had a published Laya artifact or parity evidence when this decision was made. Core ML and MLX were not viable because they cannot satisfy Android with the same engine.
+It is the only compared option with an upstream consumer, published ModernBERT/mmBERT-plus-head
+exports, measured logit parity, and official coverage of Android, iOS, desktop, and web. LiteRT and
+ExecuTorch can cover those platforms in principle, but neither had a published Laya artifact or
+parity evidence when this decision was made. Core ML and MLX were not viable because they cannot
+satisfy Android with the same engine.
 
 ## Consequences
 
-- Positive: Flutter reuses the ONNX agent I/O contract and community graphs that already report logit parity; one engine story for SC-006 extras.
-- Negative: F32 ONNX graphs are larger than fp16 safetensors; Flutter depends on a community ORT plugin; quantized graphs remain unresolved.
+- Positive: Flutter reuses the ONNX agent I/O contract and community graphs that already report
+  logit parity; one engine story for SC-006 extras.
+- Negative: F32 ONNX graphs are larger than fp16 safetensors; Flutter depends on a community ORT
+  plugin; quantized graphs remain unresolved.
 
 ## Confirmation
 
@@ -60,9 +69,11 @@ grep -E 'flutter_onnxruntime:' pubspec.yaml
 rg -n 'OnnxRuntime\(\)\.createSession' lib/
 ```
 
-The first must find no match (exit status 1). The second must print the `flutter_onnxruntime` dependency line. The third must show session creation on the load path.
+The first must find no match (exit status 1). The second must print the `flutter_onnxruntime`
+dependency line. The third must show session creation on the load path.
 
-A violation is a LiteRT or ExecuTorch inference dependency in `pubspec.yaml`, or a load/predict path that opens a session without `OnnxRuntime().createSession`.
+A violation is a LiteRT or ExecuTorch inference dependency in `pubspec.yaml`, or a load/predict path
+that opens a session without `OnnxRuntime().createSession`.
 
 ## Pros and cons of the options
 
@@ -74,7 +85,8 @@ A violation is a LiteRT or ExecuTorch inference dependency in `pubspec.yaml`, or
 ### LiteRT / TFLite
 
 - Good: multi-platform story and Flutter bindings exist.
-- Bad: no Laya export or parity evidence; iOS Swift packaging was still pre-release in the research window.
+- Bad: no Laya export or parity evidence; iOS Swift packaging was still pre-release in the research
+  window.
 
 ### ExecuTorch
 

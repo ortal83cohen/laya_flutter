@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-27"
 updated: "2026-09-27"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 0
@@ -36,7 +36,7 @@ decisions:
     action: accept
     reason: "impl-review-02 PASS. Round-01 probes for AC-002, AC-007, and AC-008 now fail when the behaviour is wrong. No blockers. Proceed to document."
 
-escalations: []
+escalations: [ ]
 
 goal_check: SC-003
 compound: skipped

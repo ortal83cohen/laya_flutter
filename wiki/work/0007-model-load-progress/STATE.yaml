@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-28"
 updated: "2026-09-28"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 0
@@ -28,7 +28,7 @@ decisions:
     action: revise-plan
     reason: "plan-review-01 F-001: opening chrome is checked by source inspection of the opening branch, not a live open. F-002: that scenario's expected outcome now includes the absence of a wall-clock fake percentage."
 
-escalations: []
+escalations: [ ]
 
 goal_check: null
 compound: null

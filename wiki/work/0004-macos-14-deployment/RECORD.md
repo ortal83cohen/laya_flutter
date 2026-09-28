@@ -1,8 +1,13 @@
 # Raise the example macOS deployment target to 14.0
 
-`flutter_onnxruntime` 1.8.5 declares macOS 14.0 in its Swift package. Flutter generates `FlutterGeneratedPluginSwiftPackage` at the tool default of 12.0, then raises that manifest only when the Xcode project's `MACOSX_DEPLOYMENT_TARGET` is higher. The example project was still 12.0, so the generated package stayed at 12.0 and the macOS build failed.
+`flutter_onnxruntime` 1.8.5 declares macOS 14.0 in its Swift package. Flutter generates
+`FlutterGeneratedPluginSwiftPackage` at the tool default of 12.0, then raises that manifest only
+when the Xcode project's `MACOSX_DEPLOYMENT_TARGET` is higher. The example project was still 12.0,
+so the generated package stayed at 12.0 and the macOS build failed.
 
-The example project's Debug, Release, and Profile configurations now set the deployment target to 14.0. A config-only macOS build then rewrote the generated manifest to macOS 14.0, and a debug macOS build completed.
+The example project's Debug, Release, and Profile configurations now set the deployment target to
+14.0. A config-only macOS build then rewrote the generated manifest to macOS 14.0, and a debug macOS
+build completed.
 
 ## File
 
@@ -18,9 +23,12 @@ The example project's Debug, Release, and Profile configurations now set the dep
 
 ## Proof
 
-The failing build reported that `flutter-onnxruntime` requires macOS 14.0 while `FlutterGeneratedPluginSwiftPackage` supported 12.0. After the project change, `flutter build macos --debug` from `example/` produced the app.
+The failing build reported that `flutter-onnxruntime` requires macOS 14.0 while
+`FlutterGeneratedPluginSwiftPackage` supported 12.0. After the project change,
+`flutter build macos --debug` from `example/` produced the app.
 
-There is no Dart test for an Xcode deployment target. The build is the check that fails when the target stays at 12.0.
+There is no Dart test for an Xcode deployment target. The build is the check that fails when the
+target stays at 12.0.
 
 ## Checks
 

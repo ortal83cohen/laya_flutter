@@ -9,11 +9,14 @@
 
 **PASS**
 
-The round-01 exporter falsity is gone: cited upstream sources confirm `scripts/export_onnx.py` and the ONNXAgent I/O contract, and the remaining high-stakes Hub / ORT / checkpoint / API claims that were reopened check out. One leftover options-table phrasing is a NIT only.
+The round-01 exporter falsity is gone: cited upstream sources confirm `scripts/export_onnx.py` and
+the ONNXAgent I/O contract, and the remaining high-stakes Hub / ORT / checkpoint / API claims that
+were reopened check out. One leftover options-table phrasing is a NIT only.
 
 ## Verification performed
 
-Re-opened the artifact and the sources it cites. Did not treat round 01 or author notes as proof of a fix.
+Re-opened the artifact and the sources it cites. Did not treat round 01 or author notes as proof of
+a fix.
 
 ```text
 $ curl -sL "https://api.github.com/repos/NandhaKishorM/laya/git/trees/main?recursive=1" \
@@ -72,15 +75,18 @@ flutter_onnxruntime: wraps ORT 1.23.0; CPU Inference ✅ on Android/iOS/Linux/ma
 local stub: empty LayaFlutter facade; pubspec has no license field ([UNVERIFIED] marker retained honestly)
 ```
 
-Spot-checks that support the patched artifact (not findings): runtime/checkpoint/API conclusions answer the research question; options tables retain alternatives; unresolved list covers the open questions raised in the body (mobile RAM/latency, web practicality, quant parity, fixture language, Router lifecycle subset, hooks shape, shortlist embedder, system_one alias, presets packaging).
+Spot-checks that support the patched artifact (not findings): runtime/checkpoint/API conclusions
+answer the research question; options tables retain alternatives; unresolved list covers the open
+questions raised in the body (mobile RAM/latency, web practicality, quant parity, fixture language,
+Router lifecycle subset, hooks shape, shortlist embedder, system_one alias, presets packaging).
 
 ## Per-criterion results
 
 Research review — acceptance-criteria table not applicable.
 
-| Criterion | Result | Evidence (file:line) | Negative case exercised |
-|---|---|---|---|
-| n/a | n/a | research artifact review, not impl | n/a |
+| Criterion | Result | Evidence (file:line)               | Negative case exercised |
+|-----------|--------|------------------------------------|-------------------------|
+| n/a       | n/a    | research artifact review, not impl | n/a                     |
 
 ## Findings
 
@@ -89,17 +95,26 @@ Research review — acceptance-criteria table not applicable.
 - Severity: NIT
 - Location: `wiki/work/0002-offline-predict/00-research.md:115`
 - Criterion affected: none
-- Observation: The chosen ONNX Runtime option’s “How it works” cell says export uses a “`torch.onnx` dynamo path.” The official in-tree exporter cited elsewhere in the same artifact (`scripts/export_onnx.py`) calls `torch.onnx.export` without `dynamo=True`. The community `mariojcr/laya-onnx` script is the one that sets `dynamo=True`. The finding at line 61 and the constraint at line 143 already separate those two exporters correctly; only this options-table cell conflates them.
-- Why it matters: Style/precision only. It does not restore the round-01 false constraint that official export is absent, and it does not change the runtime, first-checkpoint, or API conclusions.
+- Observation: The chosen ONNX Runtime option’s “How it works” cell says export uses a “`torch.onnx`
+  dynamo path.” The official in-tree exporter cited elsewhere in the same artifact (
+  `scripts/export_onnx.py`) calls `torch.onnx.export` without `dynamo=True`. The community
+  `mariojcr/laya-onnx` script is the one that sets `dynamo=True`. The finding at line 61 and the
+  constraint at line 143 already separate those two exporters correctly; only this options-table
+  cell conflates them.
+- Why it matters: Style/precision only. It does not restore the round-01 false constraint that
+  official export is absent, and it does not change the runtime, first-checkpoint, or API
+  conclusions.
 
 ## Recurrence check
 
 - Previous round: `wiki/work/0002-offline-predict/validation/research-review-01.md`
-- Recurring findings: none — round-01 F-001 (official tree ships no `export_onnx.py` / community-only matching exporter) is not restated; the patched artifact at lines 61 and 143 claims the opposite, and reopened sources confirm that claim
+- Recurring findings: none — round-01 F-001 (official tree ships no `export_onnx.py` /
+  community-only matching exporter) is not restated; the patched artifact at lines 61 and 143 claims
+  the opposite, and reopened sources confirm that claim
 - Oscillating: no
 
 ## Routing
 
-| Finding | Belongs to phase |
-|---|---|
-| F-001 | research (optional polish; does not block proceed) |
+| Finding | Belongs to phase                                   |
+|---------|----------------------------------------------------|
+| F-001   | research (optional polish; does not block proceed) |

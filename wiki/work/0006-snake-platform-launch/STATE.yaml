@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-27"
 updated: "2026-09-28"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 0
@@ -32,7 +32,7 @@ decisions:
     action: accept
     reason: "research-review-02 and plan-review-02 both PASS with zero blockers. Criteria frozen and implementation started."
 
-escalations: []
+escalations: [ ]
 
 goal_check: SC-005
 compound: null

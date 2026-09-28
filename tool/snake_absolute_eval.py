@@ -40,7 +40,6 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-
 SOURCE_COMMIT = "a2971e0cc5838cf4ff211d1fdf968db06b064434"
 MODEL_REVISION = "21057b19696fb3e27c4f4c644e6cb872ed866486"
 MODEL_ID = "OwaisAli10/laya-snake"
@@ -50,11 +49,14 @@ SOURCE_FILES = ("snake/game.py", "snake/encode.py", "snake/teacher.py")
 # Hub tree API at the pinned revision: Git blob OIDs for small files and LFS
 # SHA-256 OIDs for large files. The files needed by laya.load are all pinned.
 MODEL_FILES = {
-    "model.safetensors": (643835514, "sha256", "4be8725b696f9fc1a8cf182e1e443e91b1b0675d0d7b7614fd5f4511b7f57e21"),
+    "model.safetensors": (643835514, "sha256",
+                          "4be8725b696f9fc1a8cf182e1e443e91b1b0675d0d7b7614fd5f4511b7f57e21"),
     "encoder/config.json": (1938, "git-blob-sha1", "0de0e2d30638873790cf962def52e2acf4db3eef"),
     "rl_agent_config.json": (1179, "git-blob-sha1", "2697b2e17d869e025e1f4700c2160743bb993e21"),
-    "tokenizer/tokenizer.json": (34363188, "sha256", "609d8f4c067cd3950f88594c5a802616cea245823836ef5848ee4fc40aab5b6f"),
-    "tokenizer/tokenizer_config.json": (524, "git-blob-sha1", "c255ac0c8cb34a37d066cd0dafe313fd769d27ae"),
+    "tokenizer/tokenizer.json": (34363188, "sha256",
+                                 "609d8f4c067cd3950f88594c5a802616cea245823836ef5848ee4fc40aab5b6f"),
+    "tokenizer/tokenizer_config.json": (524, "git-blob-sha1",
+                                        "c255ac0c8cb34a37d066cd0dafe313fd769d27ae"),
 }
 
 
@@ -99,7 +101,8 @@ def checked_model(model_dir: Path) -> None:
             raise ValueError(f"pinned checkpoint file is missing: {path}")
         actual_size = path.stat().st_size
         if actual_size != expected_size:
-            raise ValueError(f"pinned checkpoint file has wrong size: {path} ({actual_size} != {expected_size})")
+            raise ValueError(
+                f"pinned checkpoint file has wrong size: {path} ({actual_size} != {expected_size})")
         digest = hashlib.sha256() if digest_type == "sha256" else hashlib.sha1()
         if digest_type == "git-blob-sha1":
             digest.update(f"blob {actual_size}\0".encode("ascii"))
@@ -138,8 +141,8 @@ def fingerprint(game: Any) -> tuple[Any, ...]:
 
 
 def play_game(
-    *, seed: int, size: int, max_steps: int, agent: Any, game_class: Any,
-    moves: Any, encode_state: Any, question: Any, teacher_move: Any,
+        *, seed: int, size: int, max_steps: int, agent: Any, game_class: Any,
+        moves: Any, encode_state: Any, question: Any, teacher_move: Any,
 ) -> dict[str, Any]:
     game = game_class(size, size, seed=seed)
     game.starve_limit = max_steps + 1
@@ -225,11 +228,13 @@ def report(games: list[dict[str, Any]], *, size: int, max_steps: int,
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--source-dir", type=Path, required=True)
     parser.add_argument("--model-dir", type=Path, required=True)
     parser.add_argument("--games", type=int, default=10)
-    parser.add_argument("--size", type=int, default=40, help="board width and height (default: 40; use 15 for published board dimensions)")
+    parser.add_argument("--size", type=int, default=40,
+                        help="board width and height (default: 40; use 15 for published board dimensions)")
     parser.add_argument("--max-steps", type=int, default=4000)
     parser.add_argument("--seed-start", type=int, default=DEFAULT_SEED_START)
     args = parser.parse_args()
@@ -243,7 +248,8 @@ def main() -> int:
         if args.games < 1 or args.size < 4 or args.max_steps < 1:
             raise ValueError("games must be positive, size at least 4, and max-steps positive")
         if args.seed_start < MIN_SEED_START:
-            raise ValueError(f"seed-start must be at least {MIN_SEED_START} to avoid published source seeds")
+            raise ValueError(
+                f"seed-start must be at least {MIN_SEED_START} to avoid published source seeds")
         checked_model(args.model_dir)
         checked_source(args.source_dir)
         game_class, moves, encode_state, question, teacher_move = source_api(args.source_dir)

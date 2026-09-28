@@ -236,7 +236,7 @@ def wiki_documents() -> list[Path]:
         p
         for p in sorted(WIKI.rglob("*.md"))
         if "work" not in p.relative_to(WIKI).parts
-        and "templates" not in p.relative_to(WIKI).parts
+           and "templates" not in p.relative_to(WIKI).parts
     ]
 
 

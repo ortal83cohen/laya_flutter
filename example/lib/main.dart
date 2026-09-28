@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:laya_flutter/laya_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'snake_screen.dart';
 import 'app_settings.dart';
+import 'snake_screen.dart';
 
 void main() {
   runApp(const ExampleApp(autostart: true));

@@ -27,7 +27,7 @@
      An empty rejected column means the research did not actually compare anything. -->
 
 | Option | How it works | Cost | Why rejected / chosen |
-|---|---|---|---|
+|--------|--------------|------|-----------------------|
 
 ## Constraints discovered
 

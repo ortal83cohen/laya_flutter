@@ -415,6 +415,7 @@ Future<Map<String, LayaAnswer>> _unusedPredict(
 
 final class _ScriptedRandom implements math.Random {
   _ScriptedRandom(this.values);
+
   final List<int> values;
   int index = 0;
 

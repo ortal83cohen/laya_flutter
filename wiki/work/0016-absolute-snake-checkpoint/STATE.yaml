@@ -31,7 +31,7 @@ decisions:
     verdict: CONDITIONAL
     action: accept-external-boundary
     reason: "Implementation-review-01 found no local implementation defect. AC-002 exact public-model inference and AC-005 pinned-checkpoint games cannot be verified without the unavailable tuned weights. Main agent checked pinned encoder/teacher/game source read-only against the local prompt and literal-move rule; no download or model run was claimed. The user-visible missing-configuration message and README were improved, but an actual configured-device launch remains unverified."
-escalations: []
+escalations: [ ]
 goal_check: SC-003
 compound: skipped
 compound_reason: "The work item has not passed its real tuned-checkpoint verification gate, so no reusable solution is recorded."

@@ -6,7 +6,8 @@
 
 - `[P]` — may run in a parallel subagent. Only mark a task `[P]` if no other `[P]` task in the
   same group touches any of the same files.
-- Every task cites the criteria it satisfies and the unit (`U1`, `U2`) it completes. A task satisfying no criterion does not belong here.
+- Every task cites the criteria it satisfies and the unit (`U1`, `U2`) it completes. A task
+  satisfying no criterion does not belong here.
 - Owned files are exclusive. Two tasks never list the same file.
 
 ## Groups
@@ -16,15 +17,15 @@
 
 ### Group 1 — <name>
 
-| # | Task | Satisfies | Files owned | Parallel | Done when |
-|---|---|---|---|---|---|
-| 1.1 | | AC-001 | | | |
-| 1.2 | | AC-002 | | `[P]` | |
+| #   | Task | Satisfies | Files owned | Parallel | Done when |
+|-----|------|-----------|-------------|----------|-----------|
+| 1.1 |      | AC-001    |             |          |           |
+| 1.2 |      | AC-002    |             | `[P]`    |           |
 
 ### Group 2 — <name>
 
 | # | Task | Satisfies | Files owned | Parallel | Done when |
-|---|---|---|---|---|---|
+|---|------|-----------|-------------|----------|-----------|
 
 ## Serialised files
 
@@ -33,7 +34,7 @@
      merges which compile and disagree at runtime. -->
 
 | File | Owning task |
-|---|---|
+|------|-------------|
 
 ## Test tasks
 
@@ -42,4 +43,4 @@
      discovered at the end. Each criterion needs a positive and a negative case. -->
 
 | # | Covers | Positive case | Negative case |
-|---|---|---|---|
+|---|--------|---------------|---------------|

@@ -30,9 +30,9 @@
 <!-- Implementation reviews only. Every criterion gets a row. Silence on a criterion is a
      failure of the review, not a pass for the code. -->
 
-| Criterion | Result | Evidence (file:line) | Negative case exercised |
-|---|---|---|---|
-| AC-001 | pass / fail | | yes / no |
+| Criterion | Result      | Evidence (file:line) | Negative case exercised |
+|-----------|-------------|----------------------|-------------------------|
+| AC-001    | pass / fail |                      | yes / no                |
 
 ## Findings
 
@@ -66,4 +66,4 @@
      finding. -->
 
 | Finding | Belongs to phase |
-|---|---|
+|---------|------------------|

@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-28"
 updated: "2026-09-28"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 0
@@ -20,7 +20,7 @@ decisions:
     action: annotate-only
     reason: "Continued after the log landed. The living turn instructions now equal the hunger-and-wall sentence from 0011 R-001. Option text names the turn only and does not rank a key. State string stays heading, head, food, and neighbour kinds. 0011 remains in validate and is not implemented here."
 
-escalations: []
+escalations: [ ]
 
 goal_check: null
 compound: skipped

@@ -9,21 +9,29 @@ allowed-tools: Read, Grep, Glob, Bash, Agent, Skill, AskUserQuestion
 
 # Build - auto-routed entry point
 
-You are a dispatcher, not a pipeline. All the actual work happens inside `/goal`, `/quick-change`, or `/feature`; this skill exists only to remove the step where the user has to choose between them.
+You are a dispatcher, not a pipeline. All the actual work happens inside `/goal`, `/quick-change`,
+or `/feature`; this skill exists only to remove the step where the user has to choose between them.
 
 Request: `$request`
 
 ## Step 1 - Understand the request
 
-If the request points at more information instead of stating it directly - a ticket, a doc, a design, an earlier conversation - read or fetch it before routing. Do not guess scope from a bare pointer.
+If the request points at more information instead of stating it directly - a ticket, a doc, a
+design, an earlier conversation - read or fetch it before routing. Do not guess scope from a bare
+pointer.
 
-If the goal is genuinely ambiguous (unclear scope, unclear acceptance, conflicting signals), ask one concrete question before routing. Do not spend a full pipeline run on the wrong question. If the request is merely small, that is not ambiguity - it is a routing signal, handled in Step 2.
+If the goal is genuinely ambiguous (unclear scope, unclear acceptance, conflicting signals), ask one
+concrete question before routing. Do not spend a full pipeline run on the wrong question. If the
+request is merely small, that is not ambiguity - it is a routing signal, handled in Step 2.
 
 ## Step 2 - Decide the route
 
 Read `wiki/conventions/workflow.md` if you have not already this session.
 
-If the request is the product's end state — finish the product, pursue `wiki/product/GOAL.md`, keep going until its success checks pass, or define the final goal and carry it through planning, implementation, and validation — invoke the `goal` skill and stop. One named change stays in this step.
+If the request is the product's end state — finish the product, pursue `wiki/product/GOAL.md`, keep
+going until its success checks pass, or define the final goal and carry it through planning,
+implementation, and validation — invoke the `goal` skill and stop. One named change stays in this
+step.
 
 Apply the five quick-route qualifiers:
 
@@ -33,7 +41,8 @@ Apply the five quick-route qualifiers:
 4. No change to a data model, a migration, or stored data.
 5. No security, privacy, authentication, authorisation, or payment surface touched.
 
-All five hold, with no doubt: this is the quick route. Any one false, or any doubt at all: this is the full route. Doubt always resolves to the full route - a wrong choice there is the expensive one.
+All five hold, with no doubt: this is the quick route. Any one false, or any doubt at all: this is
+the full route. Doubt always resolves to the full route - a wrong choice there is the expensive one.
 
 ## Step 3 - Dispatch
 
@@ -41,8 +50,11 @@ Quick route: invoke the `quick-change` skill with the request.
 
 Full route: invoke the `feature` skill with the request.
 
-Do not reimplement either pipeline's steps here, and do not run both. The invoked skill owns everything from here - phase artifacts, gates, validation rounds, the wiki record. Your job ends at the correct handoff.
+Do not reimplement either pipeline's steps here, and do not run both. The invoked skill owns
+everything from here - phase artifacts, gates, validation rounds, the wiki record. Your job ends at
+the correct handoff.
 
 ## Step 4 - Report
 
-Relay whatever the invoked skill reports back to the user. Add one line naming which route was taken and why, since that decision was made on the user's behalf.
+Relay whatever the invoked skill reports back to the user. Add one line naming which route was taken
+and why, since that decision was made on the user's behalf.

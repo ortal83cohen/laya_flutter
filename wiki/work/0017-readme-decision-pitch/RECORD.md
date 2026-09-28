@@ -1,12 +1,16 @@
 # README leads with the offline decision model
 
-The package README opened on the ONNX runtime, tokenizers, and file names. Readers who want a decision in their app had to infer the product from the engine. The README now leads with the offline decision loop: a situation, typed questions, and answers an app can act on, then what that enables and the Snake example.
+The package README opened on the ONNX runtime, tokenizers, and file names. Readers who want a
+decision in their app had to infer the product from the engine. The README now leads with the
+offline decision loop: a situation, typed questions, and answers an app can act on, then what that
+enables and the Snake example.
 
 ## File
 
 `README.md`
 
-No behavioral test applies. The change is user-facing prose. The previous README had no assertion to fail first.
+No behavioral test applies. The change is user-facing prose. The previous README had no assertion to
+fail first.
 
 ## Qualifying conditions
 
@@ -18,11 +22,16 @@ No behavioral test applies. The change is user-facing prose. The previous README
 
 ## Proof
 
-Read `README.md`. The opening describes an offline decision model. The question table names choice, score, and noul in plain language. The Snake section states that each step waits for a direction and that a clock does not advance the snake.
+Read `README.md`. The opening describes an offline decision model. The question table names choice,
+score, and noul in plain language. The Snake section states that each step waits for a direction and
+that a clock does not advance the snake.
 
 ## Checks
 
-`bash tools/check.sh` (2026-09-28) stopped at stage 3. Wiki lint and dependency resolution passed. Format failed on `integration_test/host_session_load_test.dart`, a file this change does not touch. `dart format --output=none --set-exit-if-changed` reports that file as needing a line wrap. `git diff` for that path is empty, so the unformatted lines are already in the tree.
+`bash tools/check.sh` (2026-09-28) stopped at stage 3. Wiki lint and dependency resolution passed.
+Format failed on `integration_test/host_session_load_test.dart`, a file this change does not touch.
+`dart format --output=none --set-exit-if-changed` reports that file as needing a line wrap.
+`git diff` for that path is empty, so the unformatted lines are already in the tree.
 
 ```
 Preflight: flutter and dart found
@@ -56,8 +65,12 @@ Stage 3 failed: format
 
 Exit code 1.
 
-A follow-up run applied `dart format` to that host test only, so stage 3 could pass, then restored the file with `git checkout`. With format temporarily satisfied, stage 4 (analysis) passed and stage 5 failed on an existing assertion, also outside this change:
+A follow-up run applied `dart format` to that host test only, so stage 3 could pass, then restored
+the file with `git checkout`. With format temporarily satisfied, stage 4 (analysis) passed and stage
+5 failed on an existing assertion, also outside this change:
 
-`test/offline_predict_test.dart` expects `Snake checkpoint is not configured in app_settings.dart.` The example source says `Snake checkpoint is not configured. Set it in app_settings.dart.`
+`test/offline_predict_test.dart` expects `Snake checkpoint is not configured in app_settings.dart.`
+The example source says `Snake checkpoint is not configured. Set it in app_settings.dart.`
 
-The quick-change gate is not met. Both failures are already in the tree and are not caused by `README.md`.
+The quick-change gate is not met. Both failures are already in the tree and are not caused by
+`README.md`.

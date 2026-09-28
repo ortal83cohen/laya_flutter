@@ -10,13 +10,13 @@ owner_agent: null
 created: "2026-09-28"
 updated: "2026-09-28"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
-decisions: []
+decisions: [ ]
 
-escalations: []
+escalations: [ ]
 
 goal_check: null
 compound: skipped

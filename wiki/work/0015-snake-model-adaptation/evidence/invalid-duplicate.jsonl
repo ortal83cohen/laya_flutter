@@ -1,2 +1,56 @@
-{"id":"duplicate","split":"train","state":{"width":4,"height":4,"heading":"east","head":[1,1],"food":[3,1],"snake":[[1,1],[0,1]]},"teacher_choice":"straight"}
-{"id":"duplicate","split":"validation","state":{"width":4,"height":4,"heading":"east","head":[1,1],"food":[3,1],"snake":[[1,1],[0,1]]},"teacher_choice":"straight"}
+{
+  "id": "duplicate",
+  "split": "train",
+  "state": {
+    "width": 4,
+    "height": 4,
+    "heading": "east",
+    "head": [
+      1,
+      1
+    ],
+    "food": [
+      3,
+      1
+    ],
+    "snake": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "teacher_choice": "straight"
+}
+{
+  "id": "duplicate",
+  "split": "validation",
+  "state": {
+    "width": 4,
+    "height": 4,
+    "heading": "east",
+    "head": [
+      1,
+      1
+    ],
+    "food": [
+      3,
+      1
+    ],
+    "snake": [
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "teacher_choice": "straight"
+}

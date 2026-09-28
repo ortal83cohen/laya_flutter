@@ -19,10 +19,10 @@
      not read the plan. Write each in the form: when <precondition>, the system shall
      <observable behaviour>. Avoid "correctly", "properly", "as expected" — they check nothing. -->
 
-| ID | Traces | Criterion | How it is checked | Negative case |
-|---|---|---|---|---|
-| AC-001 | R-001 | When ..., the system shall ... | | |
-| AC-002 | | | | |
+| ID     | Traces | Criterion                      | How it is checked | Negative case |
+|--------|--------|--------------------------------|-------------------|---------------|
+| AC-001 | R-001  | When ..., the system shall ... |                   |               |
+| AC-002 |        |                                |                   |               |
 
 ## Non-functional criteria
 
@@ -30,7 +30,7 @@
      Each still needs a check and a negative case. -->
 
 | ID | Traces | Criterion | How it is checked | Negative case |
-|---|---|---|---|---|
+|----|--------|-----------|-------------------|---------------|
 
 ## Explicitly not required
 
@@ -42,4 +42,4 @@
 <!-- Appended once per implementation review round. Never edited, never overwritten. -->
 
 | Round | Date | Verdict | Report |
-|---|---|---|---|
+|-------|------|---------|--------|

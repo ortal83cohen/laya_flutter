@@ -9,11 +9,14 @@
 
 **FAIL**
 
-The plan does not cover the contract's explicit incompatible-checkpoint error or the complete record required for every finished model attempt.
+The plan does not cover the contract's explicit incompatible-checkpoint error or the complete record
+required for every finished model attempt.
 
 ## Verification performed
 
-Read only `01-plan.md`, `02-criteria.md`, `04-product-contract.md`, `wiki/conventions/validation-rubrics.md`, and `wiki/templates/validation-report.md`. Ran this read-only cross-check:
+Read only `01-plan.md`, `02-criteria.md`, `04-product-contract.md`,
+`wiki/conventions/validation-rubrics.md`, and `wiki/templates/validation-report.md`. Ran this
+read-only cross-check:
 
 ```text
 $ rg -n 'R-003 \||R-004 \||AC-003 \||AC-004 \||Done when:|^\| (Complete local bundle|Missing bundle|Reverse into neck|Unknown key)|Published checkpoint export is incompatible' wiki/work/0016-absolute-snake-checkpoint/01-plan.md wiki/work/0016-absolute-snake-checkpoint/02-criteria.md wiki/work/0016-absolute-snake-checkpoint/04-product-contract.md
@@ -44,16 +47,26 @@ No runtime or source checks were performed; this is a plan review.
 - Severity: BLOCKER
 - Location: `wiki/work/0016-absolute-snake-checkpoint/01-plan.md:43`
 - Criterion affected: AC-003 (R-003 contract)
-- Observation: U2's scenarios cover a complete bundle and an absent bundle at lines 45–46. The risk entry at line 71 acknowledges incompatibility but does not specify the runner's observable outcome. The contract requires an explicit error for incompatible artifacts at `wiki/work/0016-absolute-snake-checkpoint/04-product-contract.md:21`.
-- Why it matters: The planned opening path could fail a compatibility check without meeting the explicit-error contract.
+- Observation: U2's scenarios cover a complete bundle and an absent bundle at lines 45–46. The risk
+  entry at line 71 acknowledges incompatibility but does not specify the runner's observable
+  outcome. The contract requires an explicit error for incompatible artifacts at
+  `wiki/work/0016-absolute-snake-checkpoint/04-product-contract.md:21`.
+- Why it matters: The planned opening path could fail a compatibility check without meeting the
+  explicit-error contract.
 
 ### F-002 — Decision record is narrower than the required per-attempt record
 
 - Severity: BLOCKER
 - Location: `wiki/work/0016-absolute-snake-checkpoint/01-plan.md:27`
 - Criterion affected: AC-004
-- Observation: U1 is done when it logs the unmodified model choice. Its R-004 scenarios at lines 34–35 cover a collision log and an invalid-answer diagnostic. They do not cover recording the input, attempted cell or candidate outcome, progress, and accepted or failure classification for every finished attempt, required by `wiki/work/0016-absolute-snake-checkpoint/04-product-contract.md:22` and `wiki/work/0016-absolute-snake-checkpoint/02-criteria.md:15`.
-- Why it matters: Implementing the unit as written could satisfy its stated done condition while omitting required fields and outcomes.
+- Observation: U1 is done when it logs the unmodified model choice. Its R-004 scenarios at lines
+  34–35 cover a collision log and an invalid-answer diagnostic. They do not cover recording the
+  input, attempted cell or candidate outcome, progress, and accepted or failure classification for
+  every finished attempt, required by
+  `wiki/work/0016-absolute-snake-checkpoint/04-product-contract.md:22` and
+  `wiki/work/0016-absolute-snake-checkpoint/02-criteria.md:15`.
+- Why it matters: Implementing the unit as written could satisfy its stated done condition while
+  omitting required fields and outcomes.
 
 ## Recurrence check
 
@@ -64,6 +77,6 @@ No runtime or source checks were performed; this is a plan review.
 ## Routing
 
 | Finding | Belongs to phase |
-|---|---|
-| F-001 | plan |
-| F-002 | plan |
+|---------|------------------|
+| F-001   | plan             |
+| F-002   | plan             |

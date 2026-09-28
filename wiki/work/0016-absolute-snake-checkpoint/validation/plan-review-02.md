@@ -9,11 +9,13 @@
 
 **PASS**
 
-The revised plan covers the frozen criteria and product contract, including both defects reported in round 01; no plan blocker remains.
+The revised plan covers the frozen criteria and product contract, including both defects reported in
+round 01; no plan blocker remains.
 
 ## Verification performed
 
-Read only the plan, frozen criteria, product contract, prior plan review, validation rubric, and validation-report template. Ran the following read-only checks against the reviewed documents:
+Read only the plan, frozen criteria, product contract, prior plan review, validation rubric, and
+validation-report template. Ran the following read-only checks against the reviewed documents:
 
 ```text
 $ rg -n '^(### U[0-9]|Done when:|\| (Turn north|Reverse into neck|Unknown key|Failed prediction|Accepted move|Complete local bundle|Missing bundle|Incompatible bundle|Held-out game|Missing model) |^- The model question id|^- The example selects|^- Evaluation uses|^Run focused)' wiki/work/0016-absolute-snake-checkpoint/01-plan.md
@@ -51,7 +53,9 @@ None.
 ## Recurrence check
 
 - Previous round: `wiki/work/0016-absolute-snake-checkpoint/validation/plan-review-01.md`
-- Recurring findings: none. Round 01 F-001 is covered by the incompatible-bundle scenario at `01-plan.md:49`; F-002 is covered by the U1 done condition and accepted/failure scenarios at `01-plan.md:27`, `01-plan.md:36`, and `01-plan.md:37`.
+- Recurring findings: none. Round 01 F-001 is covered by the incompatible-bundle scenario at
+  `01-plan.md:49`; F-002 is covered by the U1 done condition and accepted/failure scenarios at
+  `01-plan.md:27`, `01-plan.md:36`, and `01-plan.md:37`.
 - Oscillating: no
 
 ## Routing

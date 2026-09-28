@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-28"
 updated: "2026-09-28"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 1
@@ -24,7 +24,7 @@ decisions:
     action: accept
     reason: "research-review-02 PASS, zero blockers. F-001 did not recur. plan-review-01 PASS stands after the 0010 id correction."
 
-escalations: []
+escalations: [ ]
 
 goal_check: null
 compound: null

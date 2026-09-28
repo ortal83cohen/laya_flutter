@@ -9,14 +9,24 @@ paths:
 You are editing the wiki. These rules apply to everything under `wiki/`.
 
 - Copy the matching file from `wiki/templates/` rather than improvising a structure.
-- `01-plan.md` is prose only: zero fenced code blocks, zero snippets, zero pseudo-code. Name the file and the change in words. A full-route plan uses stable `### U<number>.` headings. Product behaviour lives in `04-product-contract.md`, and each criterion cites an `R-ID`.
-- A file under `wiki/solutions/` is written only when the compound test in `wiki/conventions/goal-loop.md` passes all three conditions.
-- `02-criteria.md` is frozen once implementation starts. A criterion added afterwards requires a recorded validation round, not a silent edit.
-- Validation reports are append-only. Round two is a new numbered file; it never overwrites round one.
-- Never delete a document. Set `status: superseded` and `superseded_by`, and set `supersedes` on the replacement.
-- Every document outside `work/` and `templates/` carries the full frontmatter from `wiki/conventions/naming.md`.
-- `last_verified` moves only on a document whose content you actually re-read. Refreshing it otherwise turns a known unknown into a false assurance.
+- `01-plan.md` is prose only: zero fenced code blocks, zero snippets, zero pseudo-code. Name the
+  file and the change in words. A full-route plan uses stable `### U<number>.` headings. Product
+  behaviour lives in `04-product-contract.md`, and each criterion cites an `R-ID`.
+- A file under `wiki/solutions/` is written only when the compound test in
+  `wiki/conventions/goal-loop.md` passes all three conditions.
+- `02-criteria.md` is frozen once implementation starts. A criterion added afterwards requires a
+  recorded validation round, not a silent edit.
+- Validation reports are append-only. Round two is a new numbered file; it never overwrites round
+  one.
+- Never delete a document. Set `status: superseded` and `superseded_by`, and set `supersedes` on the
+  replacement.
+- Every document outside `work/` and `templates/` carries the full frontmatter from
+  `wiki/conventions/naming.md`.
+- `last_verified` moves only on a document whose content you actually re-read. Refreshing it
+  otherwise turns a known unknown into a false assurance.
 - A new document needs a line in `wiki/INDEX.md`, in the same commit, saying when to read it.
-- Do not write a repository overview: no directory layouts, no dependency lists, no architecture narratives, no restatement of an API the source declares. These measurably reduce agent success and raise cost.
+- Do not write a repository overview: no directory layouts, no dependency lists, no architecture
+  narratives, no restatement of an API the source declares. These measurably reduce agent success
+  and raise cost.
 
 Run `python3 tools/lint_wiki.py` before reporting the edit complete.

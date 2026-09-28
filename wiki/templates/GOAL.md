@@ -36,9 +36,9 @@ summary: The observable end state of the product, the boundaries around it, and 
 
 <!-- SC-001 upward, never renumbered. Each check can fail. "Correctly" checks nothing. -->
 
-| ID | Check | How it is checked | Negative case |
-|---|---|---|---|
-| SC-001 | | | |
+| ID     | Check | How it is checked | Negative case |
+|--------|-------|-------------------|---------------|
+| SC-001 |       |                   |               |
 
 ## Tracks
 

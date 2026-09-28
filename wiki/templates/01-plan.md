@@ -45,9 +45,9 @@ Done when:
 
 Files it may touch:
 
-| Scenario | Category | Input | Action | Expected outcome | Covers |
-|---|---|---|---|---|---|
-| | happy path | | | | R-001, AE-001 |
+| Scenario | Category   | Input | Action | Expected outcome | Covers        |
+|----------|------------|-------|--------|------------------|---------------|
+|          | happy path |       |        |                  | R-001, AE-001 |
 
 ## Interfaces and shared decisions
 
@@ -60,7 +60,7 @@ Files it may touch:
 <!-- One row per risk. A risk with no mitigation and no trigger is a wish. -->
 
 | Risk | Likelihood | Impact | Mitigation | Trigger that means it happened |
-|---|---|---|---|---|
+|------|------------|--------|------------|--------------------------------|
 
 ## Rollback
 

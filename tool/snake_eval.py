@@ -15,7 +15,6 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-
 CHOICES = ("left", "right", "straight")
 HEADINGS = ("north", "east", "south", "west")
 
@@ -52,7 +51,8 @@ def candidate(row: dict[str, Any], choice: str) -> dict[str, Any]:
     cell = next_cell(state["head"], heading)
     inside = 0 <= cell[0] < state["width"] and 0 <= cell[1] < state["height"]
     body = cell in state["snake"]
-    kind = "wall" if not inside else "body" if body else "food" if cell == state["food"] else "empty"
+    kind = "wall" if not inside else "body" if body else "food" if cell == state[
+        "food"] else "empty"
     return {
         "heading": heading,
         "cell": cell,
@@ -118,7 +118,8 @@ def validate_fixture(rows: list[dict[str, Any]]) -> None:
         raise ValueError("fixture must contain both train and validation rows")
 
 
-def metric_report(rows: list[dict[str, Any]], predictions: list[dict[str, Any]], split: str) -> dict[str, Any]:
+def metric_report(rows: list[dict[str, Any]], predictions: list[dict[str, Any]], split: str) -> \
+dict[str, Any]:
     expected = {row["id"]: row for row in rows if row["split"] == split}
     seen: set[str] = set()
     correct = collisions = food_reached = 0

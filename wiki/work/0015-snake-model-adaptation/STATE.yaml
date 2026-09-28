@@ -10,8 +10,8 @@ owner_agent: null
 created: "2026-09-28"
 updated: "2026-09-28"
 
-blockers: []
-followups: []
+blockers: [ ]
+followups: [ ]
 
 decisions:
   - round: 0
@@ -19,7 +19,7 @@ decisions:
     action: accept
     reason: "The configured checkpoint is multilingual base; the repository adds reproducible evaluation plumbing, fixture validation and comparison schema only. No fine-tuning run or Snake-specific checkpoint is claimed."
 
-escalations: []
+escalations: [ ]
 
 goal_check: SC-003
 compound: null

@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-27"
 updated: "2026-09-27"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 0
@@ -32,7 +32,7 @@ decisions:
     action: accept
     reason: "impl-review-02 PASS. F-001 did not recur. Removing the autostart guard fails the idle widget test."
 
-escalations: []
+escalations: [ ]
 
 goal_check: null
 compound: skipped

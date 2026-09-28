@@ -10,9 +10,9 @@ owner_agent: null
 created: "2026-09-27"
 updated: "2026-09-27"
 
-blockers: []
+blockers: [ ]
 
-followups: []
+followups: [ ]
 
 decisions:
   - round: 1
@@ -20,7 +20,7 @@ decisions:
     action: annotate-only
     reason: "Implementation review found no defects. Compound skipped because the lesson is the convention itself."
 
-escalations: []
+escalations: [ ]
 
 goal_check: null
 compound: skipped

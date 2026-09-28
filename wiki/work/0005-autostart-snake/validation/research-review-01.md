@@ -9,11 +9,15 @@
 
 **PASS**
 
-Cited primary sources support the current button-gated start path, the VM no-session pump constraint, the GOAL/AC-008 scope (no play-button requirement), and the chosen explicit-autostart-flag approach; options are compared; stream unresolved items are closed in Constraints without burying a plan-affecting open question.
+Cited primary sources support the current button-gated start path, the VM no-session pump
+constraint, the GOAL/AC-008 scope (no play-button requirement), and the chosen
+explicit-autostart-flag approach; options are compared; stream unresolved items are closed in
+Constraints without burying a plan-affecting open question.
 
 ## Verification performed
 
-Opened `00-research.md`, then opened both child streams and every primary source the artifact names. Confirmed local line content with a Python spot-check.
+Opened `00-research.md`, then opened both child streams and every primary source the artifact names.
+Confirmed local line content with a Python spot-check.
 
 ```text
 $ python3 - <<'PY'
@@ -37,15 +41,21 @@ STATE.yaml contains 'Library open and predict stay closed': True
 PY
 ```
 
-Spot-checks that supported the artifact (not findings): idle home and Play Snake handler in `example/lib/main.dart`; widget test idle pump and Opening… absence; SnakeScreen runtime-required constructor and `didChangeDependencies` loop start; product first-frame forbid at `classic-snake-example.md:31`; GOAL SC-003/SC-005 silent on idle home and play button; AC-008 logic-test open ban only; VM `MissingPluginException` guidance in the macOS ONNX solution; open signature shape in `lib/src/library.dart`; mount-time open risk class marked `[UNVERIFIED]` for edge scheduling that never runs on a single pump; seven options compared with a chosen flag path.
+Spot-checks that supported the artifact (not findings): idle home and Play Snake handler in
+`example/lib/main.dart`; widget test idle pump and Opening… absence; SnakeScreen runtime-required
+constructor and `didChangeDependencies` loop start; product first-frame forbid at
+`classic-snake-example.md:31`; GOAL SC-003/SC-005 silent on idle home and play button; AC-008
+logic-test open ban only; VM `MissingPluginException` guidance in the macOS ONNX solution; open
+signature shape in `lib/src/library.dart`; mount-time open risk class marked `[UNVERIFIED]` for edge
+scheduling that never runs on a single pump; seven options compared with a chosen flag path.
 
 ## Per-criterion results
 
 Research review — acceptance-criteria table not applicable.
 
-| Criterion | Result | Evidence (file:line) | Negative case exercised |
-|---|---|---|---|
-| n/a | n/a | research artifact review, not impl | n/a |
+| Criterion | Result | Evidence (file:line)               | Negative case exercised |
+|-----------|--------|------------------------------------|-------------------------|
+| n/a       | n/a    | research artifact review, not impl | n/a                     |
 
 ## Findings
 
@@ -54,8 +64,14 @@ Research review — acceptance-criteria table not applicable.
 - Severity: NIT
 - Location: `wiki/work/0005-autostart-snake/00-research.md:51`
 - Criterion affected: none
-- Observation: The finding claims both the public `LayaFlutter.open` signature shape and that “this slice does not change that signature,” with Evidence only at `lib/src/library.dart:25-29`. Those lines establish the current signature; they do not state a slice boundary. The closed-API decision lives in `wiki/work/0005-autostart-snake/STATE.yaml` (also cited by `research/autostart-options.md`). The same evidence pointer is reused under Constraints at `00-research.md:78`. The constraint content is still true when checked against `STATE.yaml`.
-- Why it matters: Bibliographic only; a plan that keeps library open and predict closed is still the work-item decision, not an inference from the signature file alone.
+- Observation: The finding claims both the public `LayaFlutter.open` signature shape and that “this
+  slice does not change that signature,” with Evidence only at `lib/src/library.dart:25-29`. Those
+  lines establish the current signature; they do not state a slice boundary. The closed-API decision
+  lives in `wiki/work/0005-autostart-snake/STATE.yaml` (also cited by
+  `research/autostart-options.md`). The same evidence pointer is reused under Constraints at
+  `00-research.md:78`. The constraint content is still true when checked against `STATE.yaml`.
+- Why it matters: Bibliographic only; a plan that keeps library open and predict closed is still the
+  work-item decision, not an inference from the signature file alone.
 
 ## Recurrence check
 
@@ -65,6 +81,6 @@ Research review — acceptance-criteria table not applicable.
 
 ## Routing
 
-| Finding | Belongs to phase |
-|---|---|
-| (no blockers) | — |
+| Finding       | Belongs to phase |
+|---------------|------------------|
+| (no blockers) | —                |

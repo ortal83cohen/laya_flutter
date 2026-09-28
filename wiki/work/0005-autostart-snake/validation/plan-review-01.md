@@ -1,7 +1,8 @@
 # Plan review — round 01
 
 - Work item: 0005-autostart-snake
-- Reviewed artifact: `wiki/work/0005-autostart-snake/01-plan.md` (with `02-criteria.md`, `04-product-contract.md`)
+- Reviewed artifact: `wiki/work/0005-autostart-snake/01-plan.md` (with `02-criteria.md`,
+  `04-product-contract.md`)
 - Reviewer: plan-validator
 - Date: 2026-09-27
 
@@ -9,7 +10,9 @@
 
 **PASS**
 
-Every acceptance criterion maps to a unit, the plan stays inside the product contract, and codebase assumptions about the example root, play control, and idle widget test hold; the only defect is an incomplete unit-scenario expected outcome for the successful Snake navigation half of AC-001.
+Every acceptance criterion maps to a unit, the plan stays inside the product contract, and codebase
+assumptions about the example root, play control, and idle widget test hold; the only defect is an
+incomplete unit-scenario expected outcome for the successful Snake navigation half of AC-001.
 
 ## Verification performed
 
@@ -70,20 +73,22 @@ $ sed -n '8,13p' example/test/widget_test.dart
     expect(find.text('Opening…'), findsNothing);
 ```
 
-`03-tasks.md` is absent; the plan does not mark work parallel. Parallelism safety was not applicable.
+`03-tasks.md` is absent; the plan does not mark work parallel. Parallelism safety was not
+applicable.
 
 ## Per-criterion results
 
-Plan-phase coverage map (not an implementation review). Result means whether a unit addresses the criterion without a coverage gap found in this round.
+Plan-phase coverage map (not an implementation review). Result means whether a unit addresses the
+criterion without a coverage gap found in this round.
 
-| Criterion | Result | Evidence (file:line) | Negative case in plan scenarios |
-|---|---|---|---|
-| AC-001 | pass | `01-plan.md:27–35` (U1), `01-plan.md:39–46` (U2), `01-plan.md:62` | partial — play absent and opening/failure chrome named; successful Snake navigation only outside unit scenario tables (see F-001) |
-| AC-002 | pass | `01-plan.md:46` (U2) | yes — `01-plan.md:46` |
-| AC-003 | pass | `01-plan.md:33`, `01-plan.md:56–57` (U1/U3) | yes — `01-plan.md:57` |
-| AC-004 | pass | `01-plan.md:33`, `01-plan.md:56` (U1/U3) | yes — Play Snake not required (`01-plan.md:56`) |
-| AC-005 | pass | `01-plan.md:35` (U1) | yes — `01-plan.md:35` |
-| AC-006 | pass | `01-plan.md:92–94` (verification approach), `01-plan.md:89` | yes — VM test must not be treated as session-load proof |
+| Criterion | Result | Evidence (file:line)                                              | Negative case in plan scenarios                                                                                                   |
+|-----------|--------|-------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| AC-001    | pass   | `01-plan.md:27–35` (U1), `01-plan.md:39–46` (U2), `01-plan.md:62` | partial — play absent and opening/failure chrome named; successful Snake navigation only outside unit scenario tables (see F-001) |
+| AC-002    | pass   | `01-plan.md:46` (U2)                                              | yes — `01-plan.md:46`                                                                                                             |
+| AC-003    | pass   | `01-plan.md:33`, `01-plan.md:56–57` (U1/U3)                       | yes — `01-plan.md:57`                                                                                                             |
+| AC-004    | pass   | `01-plan.md:33`, `01-plan.md:56` (U1/U3)                          | yes — Play Snake not required (`01-plan.md:56`)                                                                                   |
+| AC-005    | pass   | `01-plan.md:35` (U1)                                              | yes — `01-plan.md:35`                                                                                                             |
+| AC-006    | pass   | `01-plan.md:92–94` (verification approach), `01-plan.md:89`       | yes — VM test must not be treated as session-load proof                                                                           |
 
 ## Findings
 
@@ -92,8 +97,15 @@ Plan-phase coverage map (not an implementation review). Result means whether a u
 - Severity: IMPORTANT
 - Location: `wiki/work/0005-autostart-snake/01-plan.md:34`
 - Criterion affected: AC-001
-- Observation: AC-001 and R-001 require that after a successful open the Classic Snake screen is presented (`02-criteria.md:12`, `04-product-contract.md:18`). Goal prose (`01-plan.md:5`), Interfaces (`01-plan.md:62`), and Verification approach (`01-plan.md:94`) state that navigation. U1’s “Autostart begins open” scenario claims Covers R-001 and AE-001 but its expected outcome stops at play-button absence and opening (or failure) chrome (`01-plan.md:34`). U2’s production-path scenario expected outcome stops at root construction and no open before runApp (`01-plan.md:45`). No unit scenario names successful open → Snake presented as an expected outcome.
-- Why it matters: Implement and verify can treat AC-001 as satisfied by chrome-only checks and skip the success-navigation half that the criterion and contract require.
+- Observation: AC-001 and R-001 require that after a successful open the Classic Snake screen is
+  presented (`02-criteria.md:12`, `04-product-contract.md:18`). Goal prose (`01-plan.md:5`),
+  Interfaces (`01-plan.md:62`), and Verification approach (`01-plan.md:94`) state that navigation.
+  U1’s “Autostart begins open” scenario claims Covers R-001 and AE-001 but its expected outcome
+  stops at play-button absence and opening (or failure) chrome (`01-plan.md:34`). U2’s
+  production-path scenario expected outcome stops at root construction and no open before runApp (
+  `01-plan.md:45`). No unit scenario names successful open → Snake presented as an expected outcome.
+- Why it matters: Implement and verify can treat AC-001 as satisfied by chrome-only checks and skip
+  the success-navigation half that the criterion and contract require.
 
 ## Recurrence check
 
@@ -104,5 +116,5 @@ Plan-phase coverage map (not an implementation review). Result means whether a u
 ## Routing
 
 | Finding | Belongs to phase |
-|---|---|
-| F-001 | plan |
+|---------|------------------|
+| F-001   | plan             |

@@ -14,33 +14,33 @@
 
 <!-- A-001 upward. Who takes an action that this slice must account for. -->
 
-| ID | Actor | What they are trying to do |
-|---|---|---|
-| A-001 | | |
+| ID    | Actor | What they are trying to do |
+|-------|-------|----------------------------|
+| A-001 |       |                            |
 
 ## Requirements
 
 <!-- R-001 upward, never renumbered. Each is behaviour a user or another system can observe. -->
 
-| ID | Requirement |
-|---|---|
+| ID    | Requirement             |
+|-------|-------------------------|
 | R-001 | When ..., ... shall ... |
 
 ## Flows
 
 <!-- F-001 upward. The sequences that realise the requirements. Cite the R-IDs each flow covers. -->
 
-| ID | Flow | Covers |
-|---|---|---|
-| F-001 | | R-001 |
+| ID    | Flow | Covers |
+|-------|------|--------|
+| F-001 |      | R-001  |
 
 ## Acceptance examples
 
 <!-- AE-001 upward. A concrete input and the observable result. Cite the R-ID. -->
 
-| ID | Example | Covers |
-|---|---|---|
-| AE-001 | | R-001 |
+| ID     | Example | Covers |
+|--------|---------|--------|
+| AE-001 |         | R-001  |
 
 ## Boundaries
 

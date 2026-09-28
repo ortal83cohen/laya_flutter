@@ -9,11 +9,18 @@
 
 **PASS**
 
-The death-field, constructor-default, constraint, proof-surface, and parent-decision claims that were checked against their cited sources hold; the two round-01 blockers are closed in the patched artifact and Unresolved being empty is consistent with those decisions.
+The death-field, constructor-default, constraint, proof-surface, and parent-decision claims that
+were checked against their cited sources hold; the two round-01 blockers are closed in the patched
+artifact and Unresolved being empty is consistent with those decisions.
 
 ## Verification performed
 
-Opened and line-checked every path named under Findings, Constraints discovered, Parent decisions, and Sources in `00-research.md`, plus the three stream files named in Provenance and `wiki/work/0010-restart-on-death/validation/research-review-01.md` for the recurrence check only. Confirmed controller death path, screen loop/title, constructor defaults, GOAL/classic-snake/0003/0005 citations, test ranges, `LoadedRuntime.validationOnly` as a session-less runtime, and the sole `wiki/solutions/` file.
+Opened and line-checked every path named under Findings, Constraints discovered, Parent decisions,
+and Sources in `00-research.md`, plus the three stream files named in Provenance and
+`wiki/work/0010-restart-on-death/validation/research-review-01.md` for the recurrence check only.
+Confirmed controller death path, screen loop/title, constructor defaults,
+GOAL/classic-snake/0003/0005 citations, test ranges, `LoadedRuntime.validationOnly` as a
+session-less runtime, and the sole `wiki/solutions/` file.
 
 ```text
 $ rg -n 'restart|reset' --glob '*.dart' example || true
@@ -59,7 +66,15 @@ $ sed -n '30,43p' lib/src/loaded_runtime.dart
        _temperatureByOptions = temperatureByOptions;
 ```
 
-Line-range spot checks (manual read, not pasted in full): `example/lib/snake_controller.dart` 56–80, 104–140, 179–218; `example/lib/snake_screen.dart` 15–39, 43–48, 58–73, 91–93; `example/test/snake_controller_test.dart` 150–208, 396–471; `example/test/widget_test.dart` 7–86; `example/test/snake_screen_test.dart` 13–42; `wiki/product/GOAL.md` 32, 43; `wiki/product/classic-snake-example.md` 21–35; `wiki/work/0003-classic-snake/04-product-contract.md` 23–24, 57; `wiki/work/0005-autostart-snake/04-product-contract.md` 18, 41–43; `wiki/solutions/2026-09-27-macos-onnx-session-sandbox.md` 8–32; stream Unresolved lists in `research/end-state.md`, `research/constraints.md`, and `research/tests.md` against Parent decisions at `00-research.md` 56–66.
+Line-range spot checks (manual read, not pasted in full): `example/lib/snake_controller.dart` 56–80,
+104–140, 179–218; `example/lib/snake_screen.dart` 15–39, 43–48, 58–73, 91–93;
+`example/test/snake_controller_test.dart` 150–208, 396–471; `example/test/widget_test.dart` 7–86;
+`example/test/snake_screen_test.dart` 13–42; `wiki/product/GOAL.md` 32, 43;
+`wiki/product/classic-snake-example.md` 21–35; `wiki/work/0003-classic-snake/04-product-contract.md`
+23–24, 57; `wiki/work/0005-autostart-snake/04-product-contract.md` 18, 41–43;
+`wiki/solutions/2026-09-27-macos-onnx-session-sandbox.md` 8–32; stream Unresolved lists in
+`research/end-state.md`, `research/constraints.md`, and `research/tests.md` against Parent decisions
+at `00-research.md` 56–66.
 
 ## Per-criterion results
 
@@ -75,10 +90,14 @@ None.
 - Recurring findings: none
 - Oscillating: no
 
-Round-01 F-001 (screen wiring form open while Unresolved empty) is closed at `00-research.md:66` by naming an optional predict override plus a session-less runtime. Round-01 F-002 (restart button attributed to 0005 R-001) is closed at `00-research.md:73` by separating the play-button citation from this slice’s restart-button decision. Round-01 F-003 (truncated sentence) and F-004 (STATE.yaml missing from Sources) are closed at `00-research.md:39` and `00-research.md:100`.
+Round-01 F-001 (screen wiring form open while Unresolved empty) is closed at `00-research.md:66` by
+naming an optional predict override plus a session-less runtime. Round-01 F-002 (restart button
+attributed to 0005 R-001) is closed at `00-research.md:73` by separating the play-button citation
+from this slice’s restart-button decision. Round-01 F-003 (truncated sentence) and F-004 (STATE.yaml
+missing from Sources) are closed at `00-research.md:39` and `00-research.md:100`.
 
 ## Routing
 
 | Finding | Belongs to phase |
-|---|---|
-| (none) | — |
+|---------|------------------|
+| (none)  | —                |
