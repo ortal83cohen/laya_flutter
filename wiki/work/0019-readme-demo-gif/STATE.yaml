@@ -1,0 +1,23 @@
+id: "0019-readme-demo-gif"
+title: "README uses the current demo recording GIF"
+route: quick
+phase: verify
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-09-28"
+updated: "2026-09-28"
+
+blockers:
+  - id: F-001
+    from: RECORD.md
+    severity: IMPORTANT
+    status: open
+    summary: "Full repository check suite has not been run."
+
+followups: [ ]
+decisions: [ ]
+escalations: [ ]
+goal_check: null
+compound: skipped
+compound_reason: "README media asset only; no reusable product learning that passes the compound test."
