@@ -1,0 +1,24 @@
+# Work item state. The only mutable file in a work item folder.
+# Copy this into wiki/work/NNNN-slug/STATE.yaml and keep it current.
+
+id: "0020-jev-pub-discovery"
+title: "Name Jev in the docs and retag the package for pub.dev"
+route: full
+phase: implement
+round: 0
+verdict: null
+owner_agent: null
+created: "2026-10-09"
+updated: "2026-10-09"
+
+blockers: [ ]
+
+followups: [ ]
+
+decisions: [ ]
+
+escalations: [ ]
+
+goal_check: null
+compound: skipped
+compound_reason: "Listing copy and topics only. No new learning that passes the compound test."

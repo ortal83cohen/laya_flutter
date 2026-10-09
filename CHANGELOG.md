@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Name Jev in the package description and README, and retag the package for pub.dev discovery.
+
 ## 0.1.3 - 2026-09-28
 
 - Automated patch release from main.

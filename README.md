@@ -8,9 +8,11 @@
 [![platform](https://img.shields.io/badge/platform-android%20%7C%20ios%20%7C%20web%20%7C%20windows%20%7C%20macos%20%7C%20linux-blue)](https://pub.dev/packages/laya_flutter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-**An offline decision model for Flutter.** Describe a situation in ordinary language, ask a question
-with a clear shape, and get an answer your app can act on. The first open downloads the published
-multilingual model. After that, every decision stays on the device.
+**An offline decision model for Flutter.** If you know Jev, Laya is the open-weight model for that
+same job. Jev is TypeSafe's hosted API. This package runs Laya on the device, and it does not call
+Jev. Describe a situation in ordinary language, ask a question with a clear shape, and get an answer
+your app can act on. The first open downloads the published multilingual model. After that, every
+decision stays on the device.
 
 ![Snake chooses its next move from an offline Laya decision](https://raw.githubusercontent.com/ortal83cohen/laya_flutter/main/screenshots/example.gif)
 
