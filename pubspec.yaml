@@ -2,7 +2,7 @@ name: laya_flutter
 description: >-
   Offline multilingual Laya for Flutter: on-device choice, score, and yes/no
   via ONNX. Open-weight alternative to Jev.
-version: 0.1.3
+version: 0.1.4
 repository: https://github.com/ortal83cohen/laya_flutter
 homepage: https://github.com/ortal83cohen/laya_flutter
 issue_tracker: https://github.com/ortal83cohen/laya_flutter/issues

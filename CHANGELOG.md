@@ -1,8 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.1.4 - 2026-10-09
 
 - Name Jev in the package description and README, and retag the package for pub.dev discovery.
+
+## Unreleased
+
 
 ## 0.1.3 - 2026-09-28
 
